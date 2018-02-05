@@ -1,5 +1,8 @@
 {
   "name": "jake-testing",
+  "engines": {
+    "node": "9.4.0"
+  },
   "devDependencies": {
     "eslint": "4.17.0",
     "jake": "8.0.15"
