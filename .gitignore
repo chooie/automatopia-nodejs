@@ -9,3 +9,6 @@ node_modules/**/.bin/
 
 # Build artifacts
 generated/
+
+node_modules/fsevents/lib/binding/Release/node-v59-darwin-x64/
+node_modules/uws/
