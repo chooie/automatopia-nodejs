@@ -6,6 +6,7 @@
   "devDependencies": {
     "eslint": "4.17.0",
     "jake": "8.0.15",
+    "karma": "^2.0.0",
     "mocha": "5.0.0",
     "simplebuild-karma": "^1.0.0"
   }
