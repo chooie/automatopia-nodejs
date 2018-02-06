@@ -7,6 +7,17 @@
   var strict = !process.env.loose;
   if (strict) console.log("For more forgiving test settings, use 'loose=true'");
 
+  //*** DIRECTORIES
+
+  directory(paths.tempTestfileDir);
+  directory(paths.buildDir);
+  directory(paths.buildServerDir);
+  directory(paths.buildSharedDir);
+  directory(paths.buildClientDir);
+  directory(paths.incrementalDir);
+
+  //*** GENERAL
+
   desc("This is the default task.");
   task("default", ["clean", "quick"], function (params) {
     console.log("This is the default task.");
@@ -18,6 +29,13 @@
   });
 
   task("quick", [ "versions", "lint", "test" ]);
+
+  desc("Start Karma server for testing");
+  task("karma", [ "versions" ], function() {
+    karmaRunner().start({
+      configFile: paths.karmaConfig
+    }, complete, fail);
+  }, { async: true });
 
   desc("Check dependency versions");
   task("versions", [ "nodeVersion" ]);
@@ -74,10 +92,10 @@
   task("test", [ "testShared", "testServer", "testClient" ]);
 
   desc("Test client code");
-  task("testClient", [ "testClientUi", "testClientNetwork", "testClientCss" ]);
+  task("testClient", [ "testClientUi", /* "testClientNetwork", "testClientCss" */ ]);
 
   desc("Test shared code");
-  task("testShared", [ "testSharedOnServer", "testSharedOnClient" ]);
+  task("testShared", [ /*"testSharedOnServer", "testSharedOnClient" */ ]);
 
   desc("Test server code");
   incrementalTask("testServer", [ paths.tempTestfileDir ], paths.serverTestDependencies(), function(complete, fail) {
@@ -88,37 +106,37 @@
     }, complete, fail);
   });
 
-  incrementalTask("testSharedOnServer", [], paths.sharedJsTestDependencies(), function(complete, fail) {
-    console.log("Testing shared JavaScript on server: ");
-    mochaRunner().runTests({
-      files: paths.sharedTestFiles(),
-      options: mochaConfig()
-    }, complete, fail);
-  });
+  // incrementalTask("testSharedOnServer", [], paths.sharedJsTestDependencies(), function(complete, fail) {
+  //   console.log("Testing shared JavaScript on server: ");
+  //   mochaRunner().runTests({
+  //     files: paths.sharedTestFiles(),
+  //     options: mochaConfig()
+  //   }, complete, fail);
+  // });
 
-  incrementalTask("testSharedOnClient", [], paths.sharedJsTestDependencies(), function(complete, fail) {
-    console.log("Testing shared JavaScript on client: ");
-    runKarmaOnTaggedSubsetOfTests("SHARED", complete, fail);
-  });
+  // incrementalTask("testSharedOnClient", [], paths.sharedJsTestDependencies(), function(complete, fail) {
+  //   console.log("Testing shared JavaScript on client: ");
+  //   runKarmaOnTaggedSubsetOfTests("SHARED", complete, fail);
+  // });
 
   incrementalTask("testClientUi", [], paths.clientJsTestDependencies(), function(complete, fail) {
     console.log("Testing browser UI code: ");
     runKarmaOnTaggedSubsetOfTests("UI", complete, fail);
   });
 
-  incrementalTask("testClientCss", [], paths.cssTestDependencies(), function(complete, fail) {
-    console.log("Testing CSS:");
-    runKarmaOnTaggedSubsetOfTests("CSS", complete, fail);
-  });
+  // incrementalTask("testClientCss", [], paths.cssTestDependencies(), function(complete, fail) {
+  //   console.log("Testing CSS:");
+  //   runKarmaOnTaggedSubsetOfTests("CSS", complete, fail);
+  // });
 
-  incrementalTask("testClientNetwork", [], paths.clientNetworkTestDependencies(), function(complete, fail) {
-    console.log("Testing browser networking code: ");
+  // incrementalTask("testClientNetwork", [], paths.clientNetworkTestDependencies(), function(complete, fail) {
+  //   console.log("Testing browser networking code: ");
 
-    var networkHarness = require("./src/client/network/__test_harness_server.js");
+  //   var networkHarness = require("./src/client/network/__test_harness_server.js");
 
-    var networkStopFn = networkHarness.start();
-    runKarmaOnTaggedSubsetOfTests("NET", networkStopFn(complete), fail);
-  });
+  //   var networkStopFn = networkHarness.start();
+  //   runKarmaOnTaggedSubsetOfTests("NET", networkStopFn(complete), fail);
+  // });
 
   function incrementalTask(taskName, taskDependencies, fileDependencies, action) {
     var incrementalFile = paths.incrementalDir + "/" + taskName + ".task";
