@@ -86,7 +86,7 @@
     });
   }
 
-//*** TEST
+  //*** TEST
 
   desc("Test everything (except smoke tests)");
   task("test", [ "testShared", "testServer", "testClient" ]);

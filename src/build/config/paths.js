@@ -25,62 +25,63 @@
   exports.karmaConfig = "./src/build/config/karma.conf.js";
 
   exports.serverTestFiles = function() {
-    return deglob("src/server/**/_*_test.js");
+    return deglob("src/application/server/**/_*_test.js");
   };
 
   exports.sharedTestFiles = function() {
     return deglob([
-      "src/shared/**/_*_test.js",
-      "src/node_modules/**/_*_test.js"
+      "src/application/shared/**/_*_test.js",
+      "src/application/node_modules/**/_*_test.js"
     ]);
   };
 
   exports.cssTestDependencies = function() {
     return deglob([
-      "src/client/content/**/*",
-      "src/node_modules/**/*.js"
+      "src/application/client/content/**/*",
+      "src/application/node_modules/**/*.js"
     ]);
   };
 
   exports.clientJsTestDependencies = function() {
     return deglob([
-      "src/client/ui/**/*.js",
-      "src/shared/**/*.js",
-      "src/node_modules/**/*.js"
+      "src/application/client/ui/**/*.js",
+      "src/application/shared/**/*.js",
+      "src/application/node_modules/**/*.js"
     ]);
   };
 
   exports.sharedJsTestDependencies = function() {
     return deglob([
-      "src/shared/**/*.js",
-      "src/node_modules/**/*.js"
+      "src/application/shared/**/*.js",
+      "src/application/node_modules/**/*.js"
     ]);
   };
 
   exports.clientNetworkTestDependencies = function() {
     return deglob([
-      "src/client/network/**/*.js",
-      "src/shared/**/*.js",
-      "src/node_modules/**/*.js"
+      "src/application/client/network/**/*.js",
+      "src/application/shared/**/*.js",
+      "src/application/node_modules/**/*.js"
     ]);
   };
 
   exports.serverTestDependencies = function() {
     return deglob([
-      "src/server/**/*.js",
-      "src/shared/**/*.js",
-      "src/node_modules/**/*.js"
+      "src/application/server/**/*.js",
+      "src/application/shared/**/*.js",
+      "src/application/node_modules/**/*.js"
     ]);
   };
 
   exports.smokeTestFiles = function() {
-    return deglob("src/_*_test.js");
+    return deglob("src/application/_*_test.js");
   };
 
   exports.lintFiles = function() {
     return deglob([
       "*.js",
-      "src/**/*.js"
+      "src/application/**/*.js",
+      "src/build/**/*.js"
     ], [
       "**/vendor/*.js"
     ]);
