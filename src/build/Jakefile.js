@@ -2,6 +2,13 @@
 (function() {
   "use strict";
 
+  var startTime = Date.now();
+
+  // We've put most of our require statements in functions (or tasks) so we
+  // don't have the overhead of loading modules we don't need. At the time this
+  // refactoring was done, module loading took about half a second, which was
+  // 10% of our desired maximum of five seconds for a quick build. The require
+  // statements here are just the ones that are used to set up the tasks.
   var paths = require("./config/paths.js");
 
   var strict = !process.env.loose;
@@ -18,8 +25,13 @@
 
   //*** GENERAL
 
+  jake.addListener('complete', function () {
+    var elapsedSeconds = (Date.now() - startTime) / 1000;
+    console.log("\n\nBUILD OK (" + elapsedSeconds.toFixed(2) + "s)");
+  });
+
   desc("This is the default task.");
-  task("default", ["clean", "quick"], function (params) {
+  task("default", [ "clean", "quick" ], function (params) {
     console.log("This is the default task.");
   });
 
@@ -92,19 +104,26 @@
   task("test", [ "testShared", "testServer", "testClient" ]);
 
   desc("Test client code");
-  task("testClient", [ "testClientUi", /* "testClientNetwork", "testClientCss" */ ]);
+  task(
+    "testClient",
+    [ "testClientUi", /* "testClientNetwork", "testClientCss" */ ]);
 
   desc("Test shared code");
   task("testShared", [ /*"testSharedOnServer", "testSharedOnClient" */ ]);
 
   desc("Test server code");
-  incrementalTask("testServer", [ paths.tempTestfileDir ], paths.serverTestDependencies(), function(complete, fail) {
-    console.log("Testing server JavaScript: ");
-    mochaRunner().runTests({
-      files: paths.serverTestFiles(),
-      options: mochaConfig()
-    }, complete, fail);
-  });
+  incrementalTask(
+    "testServer",
+    [ paths.tempTestfileDir ],
+    paths.serverTestDependencies(),
+    function(complete, fail) {
+      console.log("Testing server JavaScript: ");
+      mochaRunner().runTests({
+        files: paths.serverTestFiles(),
+        options: mochaConfig()
+      }, complete, fail);
+    }
+  );
 
   // incrementalTask("testSharedOnServer", [], paths.sharedJsTestDependencies(), function(complete, fail) {
   //   console.log("Testing shared JavaScript on server: ");
@@ -138,10 +157,18 @@
   //   runKarmaOnTaggedSubsetOfTests("NET", networkStopFn(complete), fail);
   // });
 
-  function incrementalTask(taskName, taskDependencies, fileDependencies, action) {
+  function incrementalTask(
+    taskName,
+    taskDependencies,
+    fileDependencies,
+    action
+  ) {
     var incrementalFile = paths.incrementalDir + "/" + taskName + ".task";
 
-    task(taskName, taskDependencies.concat(paths.incrementalDir, incrementalFile));
+    task(
+      taskName,
+      taskDependencies.concat(paths.incrementalDir, incrementalFile)
+    );
     file(incrementalFile, fileDependencies, function() {
       action(succeed, fail);
     }, {async: true});
