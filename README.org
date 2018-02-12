@@ -6,6 +6,9 @@ ecosystem.
 ** Heading 1
 *** Sub-Heading 1
 **** Sub-Sub-Heading 1
+| Title 1 | Title 2 | Title 3 | Title 4 | Title 5 |
+|---------+---------+---------+---------+---------|
+| Value 1 | Value 2 | Value 3 | Value 4 | Value 5 |
 ** Heading 2
 *** Sub-Heading 1
 *** Sub-Heading 2
