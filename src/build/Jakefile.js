@@ -31,9 +31,7 @@
   });
 
   desc("This is the default task.");
-  task("default", [ "clean", "quick", "smoketest" ], function (params) {
-    console.log("This is the default task.");
-  });
+  task("default", [ "clean", "quick", "smoketest" ], function (params) {});
 
   desc("Delete all generated files");
   task("clean", [], function() {
@@ -224,15 +222,16 @@
   task("cacheBust", [ "collateClientFiles", "bundleClientJs" ], function() {
     process.stdout.write("Cache-busting CSS and JavaScript: ");
 
-    // var hashCatRunner = require("./hashcat_runner.js");
-    // hashCatRunner.go({
-    //   files: [ paths.buildClientIndexHtml, paths.buildClient404Html ]
-    // }, removeUnwantedFiles, fail);
+    var hashCatRunner = require("./hashcat_runner.js");
+    hashCatRunner.go({
+      files: [ // paths.buildClientIndexHtml, paths.buildClient404Html
+             ]
+    }, removeUnwantedFiles, fail);
 
-    // function removeUnwantedFiles() {
-    //   shell().rm(paths.buildIntermediateFilesToErase());
-    //   complete();
-    // }
+    function removeUnwantedFiles() {
+      shell().rm(paths.buildIntermediateFilesToErase());
+      complete();
+    }
 
   }, { async: true });
 
