@@ -107,7 +107,8 @@
   desc("Test client code");
   task(
     "testClient",
-    [ "testClientUi", /* "testClientNetwork", "testClientCss" */ ]);
+    [ "testClientUi", /* "testClientNetwork", "testClientCss" */ ]
+  );
 
   desc("Test shared code");
   task("testShared", [ /*"testSharedOnServer", "testSharedOnClient" */ ]);
@@ -218,27 +219,27 @@
     );
   });
 
-  task("client", [ /* "cacheBust" */ ]);
+  task("client", [ "cacheBust" ]);
 
-  // task("cacheBust", [ "collateClientFiles", "bundleClientJs" ], function() {
-  //   process.stdout.write("Cache-busting CSS and JavaScript: ");
+  task("cacheBust", [ "collateClientFiles", "bundleClientJs" ], function() {
+    process.stdout.write("Cache-busting CSS and JavaScript: ");
 
-  //   var hashCatRunner = require("./hashcat_runner.js");
-  //   hashCatRunner.go({
-  //     files: [ paths.buildClientIndexHtml, paths.buildClient404Html ]
-  //   }, removeUnwantedFiles, fail);
+    // var hashCatRunner = require("./hashcat_runner.js");
+    // hashCatRunner.go({
+    //   files: [ paths.buildClientIndexHtml, paths.buildClient404Html ]
+    // }, removeUnwantedFiles, fail);
 
-  //   function removeUnwantedFiles() {
-  //     shell().rm(paths.buildIntermediateFilesToErase());
-  //     complete();
-  //   }
+    // function removeUnwantedFiles() {
+    //   shell().rm(paths.buildIntermediateFilesToErase());
+    //   complete();
+    // }
 
-  // }, { async: true });
+  }, { async: true });
 
   task("collateClientFiles", [ paths.buildClientDir ], function() {
     console.log("Collating client files: .");
 
-    // shell().rm("-rf", paths.buildClientDir + "/*");
+    shell().rm("-rf", paths.buildClientDir + "/*");
     // shell().cp(
     //   "-R",
     //   // "src/application/client/content/*",
