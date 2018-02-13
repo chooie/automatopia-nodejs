@@ -34,6 +34,8 @@
 
   exports.runMany = function(commands, successCallback, failureCallback) {
     var stdout = [];
+    serializedSh(commands.shift());
+
     function serializedSh(command) {
       if (command) {
         exports.run(command, function(oneStdout) {
@@ -45,7 +47,6 @@
         successCallback(stdout);
       }
     }
-    serializedSh(commands.shift());
   };
 
 }());
