@@ -3,7 +3,12 @@
 
   var jake = require("jake");
 
-  var run = exports.run = function(oneCommand, successCallback, failureCallback, options) {
+  exports.run = function(
+    oneCommand,
+    successCallback,
+    failureCallback,
+    options
+  ) {
     options = options || {};
     var suppressOutput = (options.suppressOutput === true);
 
@@ -31,7 +36,7 @@
     var stdout = [];
     function serializedSh(command) {
       if (command) {
-        run(command, function(oneStdout) {
+        exports.run(command, function(oneStdout) {
           stdout.push(oneStdout);
           serializedSh(commands.shift());
         }, failureCallback);
