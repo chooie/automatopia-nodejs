@@ -7,20 +7,19 @@
   var e = exports;
 
   e.generatedDir = "generated";
-  e.tempTestfileDir = `${e.generatedDir}" + "/test`;
-  e.incrementalDir = e.generatedDir + "/incremental";
-  e.buildDir = e.generatedDir + "/dist";
-  e.buildServerDir = e.buildDir + "/server";
-  e.buildSharedDir = e.buildDir + "/shared";
-  e.buildClientDir = e.buildDir + "/client";
-  e.buildClientIndexHtml =
-    e.buildDir + "/client/index.html";
-  e.buildClient404Html = e.buildDir + "/client/404.html";
+  e.tempTestfileDir = `${e.generatedDir}/test`;
+  e.incrementalDir = `${e.generatedDir}/incremental`;
+  e.buildDir = `${e.generatedDir}/dist`;
+  e.buildServerDir = `${e.buildDir}/server`;
+  e.buildSharedDir = `${e.buildDir}/shared`;
+  e.buildClientDir = `${e.buildDir}/client`;
+  e.buildClientIndexHtml = `${e.buildDir}/client/index.html`;
+  e.buildClient404Html = `${e.buildDir}/client/404.html`;
   e.buildIntermediateFilesToErase = function() {
     return deglob([
-      e.buildDir + "/client/_*",
-      e.buildDir + "/client/bundle.js",
-      e.buildDir + "/client/screen.css"
+      `${e.buildDir}/client/_*`,
+      `${e.buildDir}/client/bundle.js`,
+      `${e.buildDir}/client/screen.css`
     ]);
   };
 
