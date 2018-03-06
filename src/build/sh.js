@@ -13,7 +13,10 @@
     var suppressOutput = (options.suppressOutput === true);
 
     var stdout = "";
-    var child = jake.createExec(oneCommand);
+    var child = jake.createExec(
+      oneCommand,
+      { printStdout: true, printStderr: true }
+    );
     child.on("stdout", function(data) {
       if (!suppressOutput) process.stdout.write(data);
       stdout += data;

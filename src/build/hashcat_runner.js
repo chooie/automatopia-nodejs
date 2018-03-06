@@ -1,7 +1,6 @@
 (function() {
   "use strict";
 
-  var sh = require("./sh.js");
   var hashcat = require("hashcat/lib/libhashcat.js");
 
   exports.go = function(config, success, failure) {

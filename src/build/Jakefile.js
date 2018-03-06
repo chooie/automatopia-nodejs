@@ -30,8 +30,15 @@
     console.log("\n\nBUILD OK (" + elapsedSeconds.toFixed(2) + "s)");
   });
 
-  desc("This is the default task.");
-  task("default", [ "clean", "quick", "smoketest" ], function (params) {});
+  desc("Show available tasks");
+  task("default", function (params) {
+    var sh = require("./sh.js");
+    sh.run("./tasks.sh -T", function() {});
+  });
+
+  desc("Check everything works as expected");
+  task("checkAll", [ "clean", "quick", "smoketest" ], function (params) {});
+
 
   desc("Delete all generated files");
   task("clean", [], function() {
