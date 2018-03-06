@@ -110,13 +110,13 @@
   task("test", [ "testShared", "testServer", "testClient" ]);
 
   desc("Test client code");
-  task(
-    "testClient",
-    [ "testClientUi", /* "testClientNetwork", "testClientCss" */ ]
-  );
+  task("testClient", [ "testClientUi",
+                       // "testClientNetwork"
+                       // "testClientCss"
+                     ]);
 
   desc("Test shared code");
-  task("testShared", [ /*"testSharedOnServer", "testSharedOnClient" */ ]);
+  task("testShared", [ "testSharedOnServer", "testSharedOnClient" ]);
 
   desc("Test server code");
   incrementalTask(
@@ -132,23 +132,38 @@
     }
   );
 
-  // incrementalTask("testSharedOnServer", [], paths.sharedJsTestDependencies(), function(complete, fail) {
-  //   console.log("Testing shared JavaScript on server: ");
-  //   mochaRunner().runTests({
-  //     files: paths.sharedTestFiles(),
-  //     options: mochaConfig()
-  //   }, complete, fail);
-  // });
+  incrementalTask(
+    "testSharedOnServer",
+    [],
+    paths.sharedJsTestDependencies(),
+    function(complete, fail) {
+      console.log("Testing shared JavaScript on server: ");
+      mochaRunner().runTests({
+        files: paths.sharedTestFiles(),
+        options: mochaConfig()
+      }, complete, fail);
+    }
+  );
 
-  // incrementalTask("testSharedOnClient", [], paths.sharedJsTestDependencies(), function(complete, fail) {
-  //   console.log("Testing shared JavaScript on client: ");
-  //   runKarmaOnTaggedSubsetOfTests("SHARED", complete, fail);
-  // });
+  incrementalTask(
+    "testSharedOnClient",
+    [],
+    paths.sharedJsTestDependencies(),
+    function(complete, fail) {
+      console.log("Testing shared JavaScript on client: ");
+      runKarmaOnTaggedSubsetOfTests("SHARED", complete, fail);
+    }
+  );
 
-  incrementalTask("testClientUi", [], paths.clientJsTestDependencies(), function(complete, fail) {
-    console.log("Testing browser UI code: ");
-    runKarmaOnTaggedSubsetOfTests("UI", complete, fail);
-  });
+  incrementalTask(
+    "testClientUi",
+    [],
+    paths.clientJsTestDependencies(),
+    function(complete, fail) {
+      console.log("Testing browser UI code: ");
+      runKarmaOnTaggedSubsetOfTests("UI", complete, fail);
+    }
+  );
 
   // incrementalTask("testClientCss", [], paths.cssTestDependencies(), function(complete, fail) {
   //   console.log("Testing CSS:");
@@ -232,7 +247,7 @@
     var hashCatRunner = require("./hashcat_runner.js");
     hashCatRunner.go({
       files: [ // paths.buildClientIndexHtml, paths.buildClient404Html
-             ]
+      ]
     }, removeUnwantedFiles, fail);
 
     function removeUnwantedFiles() {

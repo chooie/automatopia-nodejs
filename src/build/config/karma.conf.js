@@ -13,6 +13,7 @@ module.exports = function(config) {
     files: [
       'src/application/node_modules/**/*.js',
       'src/application/client/**/*.js',
+      'src/application/shared/**/*.js'
     ],
 
     // list of files to exclude
@@ -20,10 +21,11 @@ module.exports = function(config) {
 
     // preprocessors
     preprocessors: {
-       'src/application/node_modules/*.js': [ 'commonjs' ],
-       'src/application/node_modules/vendor/big-object-diff-0.7.0.js': [ 'commonjs' ],
-       'src/application/node_modules/vendor/proclaim-2.0.0.js': [ 'commonjs' ],
+      'src/application/node_modules/*.js': [ 'commonjs' ],
+      'src/application/node_modules/vendor/big-object-diff-0.7.0.js': [ 'commonjs' ],
+      'src/application/node_modules/vendor/proclaim-2.0.0.js': [ 'commonjs' ],
       'src/application/client/*.js': [ 'commonjs' ],
+      'src/application/shared/**/*.js': ['commonjs']
     },
 
     // test results reporter to use

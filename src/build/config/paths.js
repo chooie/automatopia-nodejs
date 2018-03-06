@@ -4,98 +4,100 @@
   var glob = require("glob");
   var path = require("path");
 
-  exports.generatedDir = "generated";
-  exports.tempTestfileDir = exports.generatedDir + "/test";
-  exports.incrementalDir = exports.generatedDir + "/incremental";
-  exports.buildDir = exports.generatedDir + "/dist";
-  exports.buildServerDir = exports.buildDir + "/server";
-  exports.buildSharedDir = exports.buildDir + "/shared";
-  exports.buildClientDir = exports.buildDir + "/client";
-  exports.buildClientIndexHtml =
-    exports.buildDir + "/client/index.html";
-  exports.buildClient404Html = exports.buildDir + "/client/404.html";
-  exports.buildIntermediateFilesToErase = function() {
+  var e = exports;
+
+  e.generatedDir = "generated";
+  e.tempTestfileDir = `${e.generatedDir}" + "/test`;
+  e.incrementalDir = e.generatedDir + "/incremental";
+  e.buildDir = e.generatedDir + "/dist";
+  e.buildServerDir = e.buildDir + "/server";
+  e.buildSharedDir = e.buildDir + "/shared";
+  e.buildClientDir = e.buildDir + "/client";
+  e.buildClientIndexHtml =
+    e.buildDir + "/client/index.html";
+  e.buildClient404Html = e.buildDir + "/client/404.html";
+  e.buildIntermediateFilesToErase = function() {
     return deglob([
-      exports.buildDir + "/client/_*",
-      exports.buildDir + "/client/bundle.js",
-      exports.buildDir + "/client/screen.css"
+      e.buildDir + "/client/_*",
+      e.buildDir + "/client/bundle.js",
+      e.buildDir + "/client/screen.css"
     ]);
   };
 
-  exports.applicationSrc = "src/application";
-  exports.karmaConfig = "src/build/config/karma.conf.js";
+  e.applicationSrc = "src/application";
+  e.karmaConfig = "src/build/config/karma.conf.js";
 
-  exports.serverTestFiles = function() {
-    return deglob(exports.applicationSrc + "/server/**/_*_test.js");
+  e.serverTestFiles = function() {
+    return deglob(e.applicationSrc + "/server/**/_*_test.js");
   };
 
-  exports.sharedTestFiles = function() {
+  e.sharedTestFiles = function() {
     return deglob([
-      exports.applicationSrc + "/shared/**/_*_test.js",
-      exports.applicationSrc + "/node_modules/**/_*_test.js"
+      e.applicationSrc + "/shared/**/_*_test.js",
+      e.applicationSrc + "/node_modules/**/_*_test.js"
     ]);
   };
 
-  exports.cssTestDependencies = function() {
+  e.cssTestDependencies = function() {
     return deglob([
-      exports.applicationSrc + "/client/content/**/*",
-      exports.applicationSrc + "/node_modules/**/*.js"
+      e.applicationSrc + "/client/content/**/*",
+      e.applicationSrc + "/node_modules/**/*.js"
     ]);
   };
 
-  exports.clientJsTestDependencies = function() {
+  e.clientJsTestDependencies = function() {
     return deglob([
-      exports.applicationSrc + "/client/ui/**/*.js",
-      exports.applicationSrc + "/shared/**/*.js",
-      exports.applicationSrc + "/node_modules/**/*.js"
+      e.applicationSrc + "/client/ui/**/*.js",
+      e.applicationSrc + "/shared/**/*.js",
+      e.applicationSrc + "/node_modules/**/*.js"
     ]);
   };
 
-  exports.sharedJsTestDependencies = function() {
+  e.sharedJsTestDependencies = function() {
     return deglob([
-      exports.applicationSrc + "/shared/**/*.js",
-      exports.applicationSrc + "/node_modules/**/*.js"
+      e.applicationSrc + "/shared/**/*.js",
+      e.applicationSrc + "/node_modules/**/*.js"
     ]);
   };
 
-  exports.clientNetworkTestDependencies = function() {
+  e.clientNetworkTestDependencies = function() {
     return deglob([
-      exports.applicationSrc + "/client/network/**/*.js",
-      exports.applicationSrc + "/shared/**/*.js",
-      exports.applicationSrc + "/node_modules/**/*.js"
+      e.applicationSrc + "/client/network/**/*.js",
+      e.applicationSrc + "/shared/**/*.js",
+      e.applicationSrc + "/node_modules/**/*.js"
     ]);
   };
 
-  exports.serverTestDependencies = function() {
+  e.serverTestDependencies = function() {
     return deglob([
-      exports.applicationSrc + "/server/**/*.js",
-      exports.applicationSrc + "/shared/**/*.js",
-      exports.applicationSrc + "/node_modules/**/*.js"
+      e.applicationSrc + "/server/**/*.js",
+      e.applicationSrc + "/shared/**/*.js",
+      e.applicationSrc + "/node_modules/**/*.js"
     ]);
   };
 
-  exports.smokeTestFiles = function() {
-    return deglob(exports.applicationSrc + "/_*_test.js");
+  e.smokeTestFiles = function() {
+    return deglob(e.applicationSrc + "/_*_test.js");
   };
 
-  exports.lintFiles = function() {
+  e.lintFiles = function() {
     return deglob([
       "*.js",
-      exports.applicationSrc + "/**/*.js",
+      e.applicationSrc + "/**/*.js",
       "src/build/**/*.js"
     ], [
       "**/vendor/*.js"
     ]);
   };
 
-  exports.lintOutput = function() {
-    return exports.lintFiles().map(function(pathname) {
-      return exports.generatedDir + "/incremental/lint/" + pathname + ".lint";
+  e.lintOutput = function() {
+    return e.lintFiles().map(function(pathname) {
+      return e.generatedDir + "/incremental/lint/" + pathname + ".lint";
     });
   };
 
-  exports.lintDirectories = function() {
-    return exports.lintOutput().map(function(lintDependency) {
+  e.lintDirectories = function() {
+    return e.lintOutput().map(function(lintDependency) {
       return path.dirname(lintDependency);
     });
   };
