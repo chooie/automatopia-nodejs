@@ -31,8 +31,9 @@
 
       var hashCatRunner = require("../hashcat_runner.js");
       hashCatRunner.go({
-        files: [ // paths.buildClientIndexHtml, paths.buildClient404Html
-        ]
+        files: [ paths.buildClientIndexHtml,
+                 //paths.buildClient404Html
+               ]
       }, removeUnwantedFiles, fail);
 
       function removeUnwantedFiles() {
@@ -46,13 +47,12 @@
       console.log("Collating client files: .");
 
       shell().rm("-rf", paths.buildClientDir + "/*");
-      // shell().cp(
-      //   "-R",
-      //   // "src/application/client/content/*",
-      //   // "src/application/client/ui/vendor",
-      //   // "src/client/network/vendor",
-      //   paths.buildClientDir
-      // );
+      shell().cp(
+        "-R",
+        "src/application/client/content/*",
+        "src/application/client/ui/vendor",
+        paths.buildClientDir
+      );
     });
 
     task("bundleClientJs", [ paths.buildClientDir ], function() {
@@ -61,9 +61,7 @@
       var browserifyRunner = require("../browserify_runner.js");
       browserifyRunner.bundle({
         requires: [
-          { path: "./src/application/client/main.js", expose: "./main.js" },
-          // { path: "./src/client/ui/html_element.js", expose: "./html_element.js" },
-          // { path: "./src/client/network/real_time_connection.js", expose: "./real_time_connection.js" }
+          { path: "./src/application/client/ui/main.js", expose: "./main.js" },
         ],
         outfile: paths.buildClientDir + "/bundle.js",
         options: { debug: true }

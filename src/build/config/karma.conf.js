@@ -24,7 +24,7 @@ module.exports = function(config) {
       'src/application/node_modules/*.js': [ 'commonjs' ],
       'src/application/node_modules/vendor/big-object-diff-0.7.0.js': [ 'commonjs' ],
       'src/application/node_modules/vendor/proclaim-2.0.0.js': [ 'commonjs' ],
-      'src/application/client/*.js': [ 'commonjs' ],
+      'src/application/client/ui/**/*.js': [ 'commonjs' ],
       'src/application/shared/**/*.js': ['commonjs']
     },
 
