@@ -1,4 +1,4 @@
-/*global desc, task, file, jake, rule, fail, complete, directory*/
+/*global desc, task, jake, rule, fail, complete, directory*/
 (function() {
   "use strict";
 
@@ -31,22 +31,21 @@
   });
 
   desc("Show available tasks");
-  task("default", function (params) {
+  task("default", function () {
     var sh = require("./sh.js");
-    sh.run("./tasks.sh -T", function() {});
-  });
+    sh.run("./tasks.sh -T", function() {
+      // Don't notify Jake so complete event is not triggered
+      // Useful for not showing build complete message when we just want to see
+      // a task list
+    });
+  }, {async: true});
 
-  desc("Check everything works as expected");
-  task("checkAll", [ "clean", "quick", "smoketest" ], function (params) {});
-
+  require("./tasks/test.js");
 
   desc("Delete all generated files");
   task("clean", [], function() {
     jake.rmRf(paths.generatedDir);
   });
-
-  desc("Quick check - uses cached results");
-  task("quick", [ "versions", "lint", "test" ]);
 
   desc("Start Karma server for testing");
   task("karma", [ "versions" ], function() {
@@ -92,7 +91,6 @@
     if (passed) fs().writeFileSync(this.name, "lint ok");
     else fail("Lint failed");
   });
-
   function determineLintDependency(name) {
     var result = name.replace(/^generated\/incremental\/lint\//, "");
     return result.replace(/\.lint$/, "");
@@ -103,121 +101,6 @@
       directory(lintDirectory);
     });
   }
-
-  //*** TEST
-
-  desc("Test everything (except smoke tests)");
-  task("test", [ "testShared", "testServer", "testClient" ]);
-
-  desc("Test client code");
-  task("testClient", [ "testClientUi",
-                       // "testClientNetwork"
-                       // "testClientCss"
-                     ]);
-
-  desc("Test shared code");
-  task("testShared", [ "testSharedOnServer", "testSharedOnClient" ]);
-
-  desc("Test server code");
-  incrementalTask(
-    "testServer",
-    [ paths.tempTestfileDir ],
-    paths.serverTestDependencies(),
-    function(complete, fail) {
-      console.log("Testing server JavaScript: ");
-      mochaRunner().runTests({
-        files: paths.serverTestFiles(),
-        options: mochaConfig()
-      }, complete, fail);
-    }
-  );
-
-  incrementalTask(
-    "testSharedOnServer",
-    [],
-    paths.sharedJsTestDependencies(),
-    function(complete, fail) {
-      console.log("Testing shared JavaScript on server: ");
-      mochaRunner().runTests({
-        files: paths.sharedTestFiles(),
-        options: mochaConfig()
-      }, complete, fail);
-    }
-  );
-
-  incrementalTask(
-    "testSharedOnClient",
-    [],
-    paths.sharedJsTestDependencies(),
-    function(complete, fail) {
-      console.log("Testing shared JavaScript on client: ");
-      runKarmaOnTaggedSubsetOfTests("SHARED", complete, fail);
-    }
-  );
-
-  incrementalTask(
-    "testClientUi",
-    [],
-    paths.clientJsTestDependencies(),
-    function(complete, fail) {
-      console.log("Testing browser UI code: ");
-      runKarmaOnTaggedSubsetOfTests("UI", complete, fail);
-    }
-  );
-
-  // incrementalTask("testClientCss", [], paths.cssTestDependencies(), function(complete, fail) {
-  //   console.log("Testing CSS:");
-  //   runKarmaOnTaggedSubsetOfTests("CSS", complete, fail);
-  // });
-
-  // incrementalTask("testClientNetwork", [], paths.clientNetworkTestDependencies(), function(complete, fail) {
-  //   console.log("Testing browser networking code: ");
-
-  //   var networkHarness = require("./src/client/network/__test_harness_server.js");
-
-  //   var networkStopFn = networkHarness.start();
-  //   runKarmaOnTaggedSubsetOfTests("NET", networkStopFn(complete), fail);
-  // });
-
-  function incrementalTask(
-    taskName,
-    taskDependencies,
-    fileDependencies,
-    action
-  ) {
-    var incrementalFile = paths.incrementalDir + "/" + taskName + ".task";
-
-    task(
-      taskName,
-      taskDependencies.concat(paths.incrementalDir, incrementalFile)
-    );
-    file(incrementalFile, fileDependencies, function() {
-      action(succeed, fail);
-    }, {async: true});
-
-    function succeed() {
-      fs().writeFileSync(incrementalFile, "ok");
-      complete();
-    }
-  }
-
-  function runKarmaOnTaggedSubsetOfTests(tag, complete, fail) {
-    karmaRunner().run({
-      configFile: paths.karmaConfig,
-      expectedBrowsers: testedBrowsers(),
-      strict: strict,
-      clientArgs: [ "--grep=" + tag + ":" ]
-    }, complete, fail);
-  }
-
-  desc("End-to-end smoke tests");
-  task("smoketest", [ "build" ], function(why) {
-    console.log("Smoke testing app: ");
-    mochaRunner().runTests({
-      files: paths.smokeTestFiles(),
-      options: mochaConfig()
-    }, complete, fail);
-  }, { async: true });
 
   //*** BUILD DISTRIBUTION DIRECTORY
 
@@ -287,28 +170,16 @@
 
   //*** LAZY-LOADED MODULES
 
-  function fs() {
-    return require("fs");
-  }
-
   function karmaRunner() {
     return require("simplebuild-karma");
   }
 
-  function mochaRunner() {
-    return require("./mocha_runner.js");
-  }
-
-  function mochaConfig() {
-    return require("./config/mocha.conf.js");
+  function fs() {
+    return require("fs");
   }
 
   function shell() {
     return require("shelljs");
-  }
-
-  function testedBrowsers() {
-    return require("./config/tested_browsers.js");
   }
 
 }());

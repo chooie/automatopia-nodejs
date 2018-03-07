@@ -80,6 +80,7 @@
       "strict": [ ERROR, "function" ],
 
       // "Variables"
+      "no-unused-vars": ERROR,
       "no-delete-var": ERROR,
       "no-undef": ERROR,
       "no-undef-init": ERROR,
