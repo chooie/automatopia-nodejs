@@ -15,3 +15,6 @@ generated/
 
 node_modules/fsevents/lib/binding/Release/node-v59-darwin-x64/
 node_modules/uws/
+
+## ChromeDriver
+node_modules/chromedriver/lib/chromedriver/
