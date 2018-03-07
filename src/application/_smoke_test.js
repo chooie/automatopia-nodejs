@@ -9,7 +9,7 @@
   var webdriver = require('selenium-webdriver');
 
   var HOME_PAGE_URL = "http://localhost:5000";
-  var EXPECTED_BROWSER = "firefox 58.0.2";
+  var EXPECTED_BROWSER = "chrome";
 
   describe("Smoke test", function() {
     this.timeout(30 * 1000);
@@ -23,9 +23,7 @@
 
         driver = createDriver();
         driver.getCapabilities().then(function(capabilities) {
-          var version =
-              capabilities.get("browserName") + " " +
-              capabilities.get("browserVersion");
+          var version = capabilities.get("browserName");
           if (version !== EXPECTED_BROWSER) {
             console.log("Warning: Smoke test browser expected " +
                         EXPECTED_BROWSER + ", but was " + version);
