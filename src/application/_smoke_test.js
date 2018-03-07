@@ -2,6 +2,8 @@
   "use strict";
 
   var assert = require("_assert");
+  var chrome = require("selenium-webdriver/chrome");
+
   var http = require("http");
   var runServer = require("./_run_server.js");
   var webdriver = require('selenium-webdriver');
@@ -57,7 +59,14 @@
   });
 
   function createDriver() {
-    return new webdriver.Builder().forBrowser("firefox").build();
+    require("chromedriver");
+    const options = new chrome.Options();
+    options.addArguments('headless');
+
+    return new webdriver.Builder()
+      .forBrowser("chrome")
+      .setChromeOptions(options)
+      .build();
   }
 
   function httpGet(url, callback) {
