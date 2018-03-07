@@ -80,7 +80,8 @@
       "strict": [ ERROR, "function" ],
 
       // "Variables"
-      "no-unused-vars": ERROR,
+      // Enable this is you want to check for unused vars
+      //"no-unused-vars": ERROR,
       "no-delete-var": ERROR,
       "no-undef": ERROR,
       "no-undef-init": ERROR,
