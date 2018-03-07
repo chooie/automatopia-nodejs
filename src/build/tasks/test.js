@@ -8,7 +8,7 @@
   namespace("test", function() {
 
     desc("Check everything works as expected");
-    task("all", [ "clean", "quick", "smoketest" ], function () {});
+    task("all", [ "clean", "quick", "smoke" ], function () {});
 
     desc("Quick check - uses cached results");
     task("quick", [ "versions", "lint", "incremental:unitAndIntegration" ]);
@@ -92,7 +92,7 @@
     });
 
     desc("End-to-end smoke tests");
-    task("smoketest", [ "build:all" ], function() {
+    task("smoke", [ "build:all" ], function() {
       console.log("Smoke testing app: ");
       mochaRunner().runTests({
         files: paths.smokeTestFiles(),
