@@ -40,7 +40,16 @@
     });
   }, {async: true});
 
+  desc("Start localhost server for manual testing");
+  task("run", [ "nodeVersion", "build:all" ], function() {
+    console.log("NEED TO IMPLEMENT");
+    console.log("Running server. Press Ctrl-C to stop.");
+    // We never call complete() because we want the task to hang until the user
+    // presses 'Ctrl-C'.
+  }, { async: true });
+
   require("./tasks/test.js");
+  require("./tasks/build_distribution.js");
 
   desc("Delete all generated files");
   task("clean", [], function() {
@@ -102,72 +111,6 @@
     });
   }
 
-  //*** BUILD DISTRIBUTION DIRECTORY
-
-  desc("Bundle and build code");
-  task("build", [ "server", "client" ]);
-
-  task("server", [ paths.buildServerDir, paths.buildSharedDir ], function() {
-    console.log("Collating server files: .");
-
-    shell().rm("-rf", paths.buildDir + "/server/*");
-    shell().rm("-rf", paths.buildDir + "/shared/*");
-    shell().rm("-rf", paths.buildDir + "/node_modules/*");
-    shell().cp(
-      "-R",
-      "src/application/server",
-      "src/application/shared",
-      "src/application/node_modules",
-      paths.buildDir
-    );
-  });
-
-  task("client", [ "cacheBust" ]);
-
-  task("cacheBust", [ "collateClientFiles", "bundleClientJs" ], function() {
-    process.stdout.write("Cache-busting CSS and JavaScript: ");
-
-    var hashCatRunner = require("./hashcat_runner.js");
-    hashCatRunner.go({
-      files: [ // paths.buildClientIndexHtml, paths.buildClient404Html
-      ]
-    }, removeUnwantedFiles, fail);
-
-    function removeUnwantedFiles() {
-      shell().rm(paths.buildIntermediateFilesToErase());
-      complete();
-    }
-
-  }, { async: true });
-
-  task("collateClientFiles", [ paths.buildClientDir ], function() {
-    console.log("Collating client files: .");
-
-    shell().rm("-rf", paths.buildClientDir + "/*");
-    // shell().cp(
-    //   "-R",
-    //   // "src/application/client/content/*",
-    //   // "src/application/client/ui/vendor",
-    //   // "src/client/network/vendor",
-    //   paths.buildClientDir
-    // );
-  });
-
-  task("bundleClientJs", [ paths.buildClientDir ], function() {
-    process.stdout.write("Bundling client files with Browserify: ");
-
-    var browserifyRunner = require("./browserify_runner.js");
-    browserifyRunner.bundle({
-      requires: [
-        { path: "./src/application/client/main.js", expose: "./main.js" },
-        // { path: "./src/client/ui/html_element.js", expose: "./html_element.js" },
-        // { path: "./src/client/network/real_time_connection.js", expose: "./real_time_connection.js" }
-      ],
-      outfile: paths.buildClientDir + "/bundle.js",
-      options: { debug: true }
-    }, complete, fail);
-  }, { async: true });
-
   //*** LAZY-LOADED MODULES
 
   function karmaRunner() {
@@ -176,10 +119,6 @@
 
   function fs() {
     return require("fs");
-  }
-
-  function shell() {
-    return require("shelljs");
   }
 
 }());

@@ -92,7 +92,7 @@
     });
 
     desc("End-to-end smoke tests");
-    task("smoketest", [ "build" ], function() {
+    task("smoketest", [ "build:all" ], function() {
       console.log("Smoke testing app: ");
       mochaRunner().runTests({
         files: paths.smokeTestFiles(),
