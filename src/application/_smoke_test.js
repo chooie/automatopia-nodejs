@@ -7,6 +7,7 @@
   var http = require("http");
   var runServer = require("./_run_server.js");
   var webdriver = require('selenium-webdriver');
+  var By = webdriver.By;
 
   var HOME_PAGE_URL = "http://localhost:5000";
   var EXPECTED_BROWSER = "chrome";
@@ -43,8 +44,7 @@
     it("can get home page", function(done) {
       httpGet(HOME_PAGE_URL, function(response, receivedData) {
         var marker = "App home page";
-        var foundHomePage =
-            receivedData.indexOf(marker) !== -1;
+        var foundHomePage = receivedData.indexOf(marker) !== -1;
 
         assert.equal(
           foundHomePage,
@@ -53,6 +53,14 @@
         );
         done();
       });
+    });
+
+    it("can find the header", async function() {
+      driver.get(HOME_PAGE_URL);
+      var elements = await driver.findElements(By.id("header-text"));
+      var element = elements[0];
+      var text = await element.getText();
+      assert.equal(text, "Hello, world!");
     });
   });
 
