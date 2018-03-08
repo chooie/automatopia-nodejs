@@ -1,17 +1,16 @@
-#+TITLE: Jake Testing
-The goal of this repo is to collect my learning on TDD within the Nodejs
-ecosystem.
+#+TITLE: Automatopia-nodejs
+This repo is a web-application template that provides sufficient tooling for
+testing at the unit, integration, and end-to-end level.
 
-* Example Headings
-** Heading 1
-*** Sub-Heading 1
-**** Sub-Sub-Heading 1
-| Title 1 | Title 2 | Title 3 | Title 4 | Title 5 |
-|---------+---------+---------+---------+---------|
-| Value 1 | Value 2 | Value 3 | Value 4 | Value 5 |
-** Heading 2
-*** Sub-Heading 1
-*** Sub-Heading 2
-** Heading 3
-*** Sub-Heading 1
-*** Sub-Heading 2
+There is a strong focus on automation and static analysis (linting). Tests can
+also be run incrementally to keep the feedback loop as tight as possible.
+
+* Development
+** View the available tasks to run
+   #+BEGIN_SRC bash
+   ./tasks.sh
+   #+END_SRC
+* Credits
+  Much of the inspiration and implementation is borrowed from James Shore
+  (https://github.com/jamesshore). I highly recommend his webseries Let's Code
+  Test Driven Javascript (http://www.letscodejavascript.com/).
