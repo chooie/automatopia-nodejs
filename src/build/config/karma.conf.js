@@ -13,7 +13,11 @@ module.exports = function(config) {
     files: [
       'src/application/node_modules/**/*.js',
       'src/application/client/**/*.js',
-      'src/application/shared/**/*.js'
+      'src/application/shared/**/*.js',
+      { pattern: 'src/application/client/content/vendor/normalize-3.0.2.css',
+        included: false },
+      { pattern: 'src/application/client/content/screen.css', included: false },
+      { pattern: 'src/application/client/content/index.html', included: false },
     ],
 
     // list of files to exclude
@@ -24,7 +28,9 @@ module.exports = function(config) {
       'src/application/node_modules/*.js': [ 'commonjs' ],
       'src/application/node_modules/vendor/big-object-diff-0.7.0.js': [ 'commonjs' ],
       'src/application/node_modules/vendor/proclaim-2.0.0.js': [ 'commonjs' ],
-      'src/application/client/ui/**/*.js': [ 'commonjs' ],
+      'src/application/client/content/*.js': [ 'commonjs' ],
+      'src/application/client/ui/*.js': [ 'commonjs' ],
+      'src/application/client/content/vendor/quixote-0.9.0.js': [ 'commonjs' ],
       'src/application/shared/**/*.js': ['commonjs']
     },
 

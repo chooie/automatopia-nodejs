@@ -20,10 +20,7 @@
       task("unitAndIntegration", [ "shared", "server", "client" ]);
 
       desc("Test client code");
-      task("client", [ "clientUi",
-                       // "testClientNetwork
-                       // "testClientCss"
-                     ]);
+      task("client", [ "clientUi", "testClientCss"]);
 
       desc("Test shared code");
       task("shared", [ "sharedOnServer", "sharedOnClient" ]);
@@ -75,20 +72,15 @@
         }
       );
 
-      // incrementalTask("testClientCss", [], paths.cssTestDependencies(), function(complete, fail) {
-      //   console.log("Testing CSS:");
-      //   runKarmaOnTaggedSubsetOfTests("CSS", complete, fail);
-      // });
-
-      // incrementalTask("testClientNetwork", [], paths.clientNetworkTestDependencies(), function(complete, fail) {
-      //   console.log("Testing browser networking code: ");
-
-      //   var networkHarness = require("./src/client/network/__test_harness_server.js");
-
-      //   var networkStopFn = networkHarness.start();
-      //   runKarmaOnTaggedSubsetOfTests("NET", networkStopFn(complete), fail);
-      // });
-
+      incrementalTask(
+        "testClientCss",
+        [],
+        paths.cssTestDependencies(),
+        function(complete, fail) {
+          console.log("Testing CSS:");
+          runKarmaOnTaggedSubsetOfTests("CSS", complete, fail);
+        }
+      );
     });
 
     desc("End-to-end smoke tests");
