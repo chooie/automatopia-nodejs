@@ -33,7 +33,7 @@
   desc("Show available tasks");
   task("default", function () {
     var sh = require("./sh.js");
-    sh.run("./tasks.sh -T", function() {
+    sh.run("./tasks.sh -ls", function() {
       // Don't notify Jake so complete event is not triggered
       // Useful for not showing build complete message when we just want to see
       // a task list
@@ -42,8 +42,10 @@
 
   desc("Start localhost server for manual testing");
   task("run", [ "nodeVersion", "build:all" ], function() {
-    console.log("NEED TO IMPLEMENT");
+    var runServer = require("../application/_run_server.js");
+
     console.log("Running server. Press Ctrl-C to stop.");
+    runServer.runInteractively();
     // We never call complete() because we want the task to hang until the user
     // presses 'Ctrl-C'.
   }, { async: true });

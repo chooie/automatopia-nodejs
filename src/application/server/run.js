@@ -9,6 +9,6 @@
   const server = new Server();
 
   await server.start(CONTENT_DIR, "404.html", port);
-  console.log("Server started");
+  console.log(`Server started on port '${port}'`);
 
 }());
