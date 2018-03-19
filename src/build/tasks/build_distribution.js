@@ -32,7 +32,7 @@
       var hashCatRunner = require("../hashcat_runner.js");
       hashCatRunner.go({
         files: [ paths.buildClientIndexHtml,
-                 //paths.buildClient404Html
+                 paths.buildClient404Html
                ]
       }, removeUnwantedFiles, fail);
 
