@@ -3,6 +3,9 @@
   "engines": {
     "node": "9.4.0"
   },
+  "scripts": {
+    "heroku-prebuild": "./tasks.sh build:all"
+  },
   "devDependencies": {
     "browserify": "^16.1.0",
     "chromedriver": "^2.36.0",
