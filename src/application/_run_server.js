@@ -10,7 +10,7 @@
   };
 
   exports.runProgrammatically = function(callback) {
-    var serverProcess = run(["pipe", "pipe", process.stderr]);
+    var serverProcess = runOnlyWithStdErr();
 
     serverProcess.stdout.setEncoding("utf8");
     serverProcess.stdout.on("data", function(chunk) {
@@ -19,6 +19,11 @@
       }
     });
   };
+
+  function runOnlyWithStdErr() {
+    var serverProcess = run(["pipe", "pipe", process.stderr]);
+    return serverProcess;
+  }
 
   function run(stdioOptions) {
     var commandLine = parseProcFile();
