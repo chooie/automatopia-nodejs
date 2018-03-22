@@ -41,12 +41,12 @@
       }, done);
     });
 
-    after(function() {
-      exports.frame.remove();
-    });
-
     beforeEach(function() {
       exports.frame.reset();
+    });
+
+    after(function() {
+      exports.frame.remove();
     });
   };
 
@@ -94,11 +94,23 @@
   };
 
   exports.margin = function margin(element) {
-    return getCompoundStyle(element, "margin-top", "margin-right", "margin-bottom", "margin-left");
+    return getCompoundStyle(
+      element,
+      "margin-top",
+      "margin-right",
+      "margin-bottom",
+      "margin-left"
+    );
   };
 
   exports.padding = function padding(element) {
-    return getCompoundStyle(element, "padding-top", "padding-right", "padding-bottom", "padding-left");
+    return getCompoundStyle(
+      element,
+      "padding-top",
+      "padding-right",
+      "padding-bottom",
+      "padding-left"
+    );
   };
 
   exports.under = function under(element, relativeToElement) {
@@ -124,13 +136,20 @@
 
       var foundRelative = false;
       var elementAfterRelative = false;
-      for (var child = elementNode.parentNode.firstChild; child !== null; child = child.nextSibling) {
+      for (
+        var child = elementNode.parentNode.firstChild;
+        child !== null;
+        child = child.nextSibling
+      ) {
         if (child === elementNode) {
           if (foundRelative) elementAfterRelative = true;
         }
         if (child === relativeNode) foundRelative = true;
       }
-      if (!foundRelative) throw new Error("can't yet compare elements that have same z-index and are not siblings");
+      if (!foundRelative) {
+        throw new Error("Can't yet compare elements that have same z-index " +
+                        "and are not siblings");
+      }
       return elementAfterRelative;
     }
   };
@@ -138,10 +157,15 @@
   exports.backgroundImage = function backgroundImage(element) {
     var url = element.getRawStyle("background-image");
 
-    var parsedUrl = url.match(/^url\("?http:\/\/(.+?)(\/.*?)"?\)$/);    // strip off domain
+    var parsedUrl = stripOffDomain(url);
     if (parsedUrl === null) throw new Error("could not parse URL: " + url);
 
     return parsedUrl[2];
+
+    function stripOffDomain(url) {
+      var parsedUrl = url.match(/^url\("?http:\/\/(.+?)(\/.*?)"?\)$/);
+      return parsedUrl;
+    }
   };
 
   exports.backgroundPosition = function backgroundImage(element) {
@@ -160,10 +184,15 @@
     var right = element.getRawStyle("border-right-style");
     var bottom = element.getRawStyle("border-bottom-style");
     var left = element.getRawStyle("border-left-style");
-    return !(top === "none" && right === "none" && bottom === "none" && left === "none");
+    return ! (top === "none" &&
+              right === "none"
+              && bottom === "none"
+              && left === "none");
   };
 
-  exports.isTextVerticallyCentered = function isTextVerticallyCentered(element) {
+  exports.isTextVerticallyCentered = function isTextVerticallyCentered(
+    element
+  ) {
     var elementHeight = Math.round(element.getRawPosition().height);
     return elementHeight + "px" === exports.lineHeight(element);
   };
@@ -175,18 +204,27 @@
   exports.dropShadow = function dropShadow(element) {
     var shadow = element.getRawStyle("box-shadow");
 
-    // When there is no drop shadow, most browsers say 'none', but IE 9 gives a color and nothing else.
-    // We handle that case here.
+    // When there is no drop shadow, most browsers say 'none', but IE 9 gives a
+    // color and nothing else. We handle that case here.
     if (shadow === "white") return "none";
-    if (shadow.match(/^#[0-9a-f]{6}$/)) return "none";      // look for '#' followed by six hex digits
+    if (isHexString(shadow)) return "none";
 
     // The standard value seems to be "rgb(r, g, b) Wpx Xpx Ypx Zpx",
     // but IE 9 gives us "Wpx Xpx Ypx Zpx #rrggbb". We need to normalize it.
     // BTW, we don't support multiple shadows yet
-    var groups = shadow.match(/^([^#]+) (#......)/);   // get everything before the '#' and the r, g, b
-    if (groups === null) return shadow;   // There was no '#', so we assume we're not on IE 9 and everything's fine
+
+    // get everything before the '#' and the r, g, b
+    var groups = shadow.match(/^([^#]+) (#......)/);
+    if (groups === null) {
+      // There was no '#', so we assume we're not on IE 9 and everything's fine
+      return shadow;
+    }
 
     return normalizeColorString(groups[2]) + " " + groups[1];
+
+    function isHexString(shadow) {
+      shadow.match(/^#[0-9a-f]{6}$/);
+    }
   };
 
   exports.textIsUnderlined = function textIsUnderlined(element) {
@@ -202,13 +240,25 @@
     return element.getRawStyle("opacity");
   };
 
-  exports.assertHoverStyle = function assertHoverStyle(button, expectedColor, description) {
+  exports.assertHoverStyle = function assertHoverStyle(
+    button,
+    expectedColor,
+    description
+  ) {
     applyClass(button, "_hover_", function() {
-      assert.equal(exports.backgroundColor(button), expectedColor, description + " hover state background color");
+      assert.equal(
+        exports.backgroundColor(button),
+        expectedColor,
+        description + " hover state background color"
+      );
     });
   };
 
-  exports.assertActivateDepresses = function assertActivateDepresses(button, expectedDescriptor, description) {
+  exports.assertActivateDepresses = function assertActivateDepresses(
+    button,
+    expectedDescriptor,
+    description
+  ) {
     applyClass(button, "_active_", function() {
       button.assert({
         top: expectedDescriptor
@@ -236,8 +286,15 @@
     var makeLintHappy = domElement.offsetHeight;
   }
 
-  function getCompoundStyle(element, subStyle1, subStyle2, subStyle3, subStyle4) {
-    // We can't look at compound properties directly because they return "" on Firefox and IE 9
+  function getCompoundStyle(
+    element,
+    subStyle1,
+    subStyle2,
+    subStyle3,
+    subStyle4
+  ) {
+    // We can't look at compound properties directly because they return "" on
+    // Firefox and IE 9
     var one = element.getRawStyle(subStyle1);
     var two = element.getRawStyle(subStyle2);
     var three = element.getRawStyle(subStyle3);
@@ -253,11 +310,6 @@
     return result;
   }
 
-
-
-
-
-
   // Based on MDN code at https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
   function trim(str) {
     var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
@@ -268,8 +320,10 @@
     if (color === "white") return "rgb(255, 255, 255)";
     if (color === "transparent") return "rgba(0, 0, 0, 0)";
 
-    var colorGroups = color.match(/^#(..)(..)(..)/);    // look for presence of #rrggbb string
-    if (colorGroups === null) return color;   // if doesn't match, assume we have rgb() string
+    // look for presence of #rrggbb string
+    var colorGroups = color.match(/^#(..)(..)(..)/);
+    // if doesn't match, assume we have rgb() string
+    if (colorGroups === null) return color;
 
     var r = parseInt(colorGroups[1], 16);
     var g = parseInt(colorGroups[2], 16);
