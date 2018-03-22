@@ -76,16 +76,16 @@
       "radix": ERROR,
       "require-await": ERROR,
 
-      // "Strict Mode"
-      "strict": [ ERROR, "function" ],
-
       // "Variables"
       // Enable this is you want to check for unused vars
       //"no-unused-vars": ERROR,
       "no-delete-var": ERROR,
       "no-undef": ERROR,
       "no-undef-init": ERROR,
-      "no-use-before-define": [ ERROR, { "functions": false, "classes": false, "variables": false} ],
+      "no-use-before-define": [
+        ERROR,
+        { "functions": false, "classes": false, "variables": false}
+      ],
 
       // "Stylistic Issues"
       "new-cap": ERROR,
