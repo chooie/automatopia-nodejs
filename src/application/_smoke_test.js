@@ -13,7 +13,7 @@
   var EXPECTED_BROWSER = "chrome";
 
   describe("Smoke test", function() {
-    this.timeout(30 * 1000);
+    this.timeout(5 * 1000);
 
     var serverProcess;
     var driver;
@@ -23,14 +23,18 @@
         serverProcess = process;
 
         driver = createDriver();
-        driver.getCapabilities().then(function(capabilities) {
-          var version = capabilities.get("browserName");
-          if (version !== EXPECTED_BROWSER) {
-            console.log("Warning: Smoke test browser expected " +
-                        EXPECTED_BROWSER + ", but was " + version);
-          }
-          done();
-        });
+        driver.getCapabilities()
+          .then(function(capabilities) {
+            var version = capabilities.get("browserName");
+            if (version !== EXPECTED_BROWSER) {
+              console.log("Warning: Smoke test browser expected " +
+                          EXPECTED_BROWSER + ", but was " + version);
+            }
+          }).catch(function(err) {
+            console.log(err);
+          }).then(function() {
+            done();
+          });
       });
     });
 
