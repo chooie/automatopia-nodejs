@@ -22,9 +22,9 @@
       runServer.runProgrammatically(function(process) {
         serverProcess = process;
 
-        driver = createDriver();
-        driver.getCapabilities()
-          .then(function(capabilities) {
+        try {
+          driver = createDriver();
+          driver.getCapabilities() .then(function(capabilities) {
             var version = capabilities.get("browserName");
             if (version !== EXPECTED_BROWSER) {
               console.log("Warning: Smoke test browser expected " +
@@ -32,15 +32,21 @@
             }
           }).catch(function(err) {
             console.log(err);
-          }).then(function() {
-            done();
-          });
+          }).then(done);
+        } catch (error) {
+          throw error;
+        }
       });
     });
 
     after(function(done) {
       serverProcess.on("exit", function(code, signal) {
-        driver.quit().then(done);
+        driver.quit()
+          .then(function() {})
+          .catch(function(error){
+            console.log(error);
+          })
+          .then(done);
       });
       serverProcess.kill();
     });
@@ -71,7 +77,7 @@
   function createDriver() {
     require("chromedriver");
     const options = new chrome.Options();
-    options.addArguments('headless');
+    options.addArguments('headless', 'disable-gpu', 'no-sandbox');
 
     return new webdriver.Builder()
       .forBrowser("chrome")
