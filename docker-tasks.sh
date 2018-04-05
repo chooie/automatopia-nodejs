@@ -12,7 +12,6 @@ if [ $@ == 'karma' ]; then
   docker run \
          --tty \
          --interactive \
-         --volume ~/.docker-yarn-cache:/root/yarn-cache \
          --volume `pwd`:/tmp/project \
          --workdir /tmp/project \
          --publish 9876:9876 \
@@ -21,7 +20,6 @@ elif [ $@ == 'run' ]; then
   docker run \
          --tty \
          --interactive \
-         --volume ~/.docker-yarn-cache:/root/yarn-cache \
          --volume `pwd`:/tmp/project \
          --workdir /tmp/project \
          --publish 5000:5000 \
@@ -30,7 +28,6 @@ else
     docker run \
            --tty \
            --interactive \
-           --volume ~/.docker-yarn-cache:/root/yarn-cache \
            --volume `pwd`:/tmp/project \
            --workdir /tmp/project \
            --net="host" \
