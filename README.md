@@ -8,9 +8,37 @@ also be run incrementally to keep the feedback loop as tight as possible.
 ## Development
 View the available tasks to run
 
+### Run on your local machine
+
 ``` bash
 ./tasks.sh
 ```
+
+### Run within Docker
+
+```bash
+./docker-tasks.sh
+```
+
+### Quickstart
+
+- Install docker (I'm running 18.03.0-ce-mac60)
+- Start the Karma server
+
+    ```bash
+    ./docker-tasks.sh karma
+    ```
+- Capture the browsers you want to test by visiting http://localhost:9876
+- Run all the checks
+
+    ```bash
+    ./docker-tasks.sh test:all
+    ```
+- Start the application
+
+    ```bash
+    ./docker-tasks.sh run
+    ```
 
 ## Setup
 ### Frontend testing requirements
