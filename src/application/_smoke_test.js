@@ -4,6 +4,7 @@
   const assert = require("_assert");
   const chrome = require("selenium-webdriver/chrome");
   const http = require("http");
+  const https = require("https");
   const webdriver = require('selenium-webdriver');
 
   const By = webdriver.By;
@@ -26,7 +27,7 @@
 
         try {
           driver = createDriver();
-          driver.getCapabilities() .then(function(capabilities) {
+          driver.getCapabilities().then(function(capabilities) {
             const version = capabilities.get("browserName");
             if (version !== EXPECTED_BROWSER) {
               console.log("Warning: Smoke test browser expected " +
@@ -87,7 +88,16 @@
 
   function httpGet(url) {
     return new Promise(function(resolve, reject) {
-      const request = http.get(url);
+      let request;
+
+      if (url.startsWith("http://")) {
+        request = http.get(url);
+      } else if (url.startsWith("https://")) {
+        request = https.get(url);
+      } else {
+        throw new Error(`Expected url to beging with http(s) but got ${url}`);
+      }
+
       request.on("response", function(response) {
         let receivedData = "";
         response.setEncoding("utf8");
