@@ -3,13 +3,15 @@
 
   const assert = require("_assert");
   const chrome = require("selenium-webdriver/chrome");
-
   const http = require("http");
-  const runServer = require("./_run_server.js");
   const webdriver = require('selenium-webdriver');
+
   const By = webdriver.By;
 
-  const HOME_PAGE_URL = "http://localhost:5000";
+  const config = require("./shared/config.js");
+  const runServer = require("./_run_server.js");
+
+  const HOME_PAGE_URL = `http://localhost:${config.defaultPort}`;
   const EXPECTED_BROWSER = "chrome";
 
   describe("Smoke test", function() {

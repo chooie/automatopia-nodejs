@@ -1,16 +1,18 @@
 (function() {
   "use strict";
 
-  var child_process = require("child_process");
-  var fs = require("fs");
-  var procfile = require("procfile");
+  const child_process = require("child_process");
+  const fs = require("fs");
+  const procfile = require("procfile");
+
+  const config = require("../application/shared/config.js");
 
   exports.runInteractively = function() {
     return run("inherit");
   };
 
   exports.runProgrammatically = function(callback) {
-    var serverProcess = runOnlyWithStdErr();
+    const serverProcess = runOnlyWithStdErr();
 
     serverProcess.stdout.setEncoding("utf8");
     serverProcess.stdout.on("data", function(chunk) {
@@ -21,12 +23,12 @@
   };
 
   function runOnlyWithStdErr() {
-    var serverProcess = run(["pipe", "pipe", process.stderr]);
+    const serverProcess = run(["pipe", "pipe", process.stderr]);
     return serverProcess;
   }
 
   function run(stdioOptions) {
-    var commandLine = parseProcFile();
+    const commandLine = parseProcFile();
     return child_process.spawn(
       commandLine.command,
       commandLine.options,
@@ -35,10 +37,10 @@
   }
 
   function parseProcFile() {
-    var fileData = fs.readFileSync("Procfile", "utf8");
-    var webCommand = procfile.parse(fileData).web;
+    const fileData = fs.readFileSync("Procfile", "utf8");
+    const webCommand = procfile.parse(fileData).web;
     webCommand.options = webCommand.options.map(function(element) {
-      if (element === "$PORT") return "5000";
+      if (element === "$PORT") return config.defaultPort;
       else return element;
     });
     return webCommand;
