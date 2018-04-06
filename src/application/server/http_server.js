@@ -15,28 +15,38 @@
     }
 
     start(portNumber) {
-      const listen = util.promisify(this._httpServer.listen.bind(this._httpServer));
-      return listen(portNumber);
+      const listenFn = this._httpServer.listen.bind(this._httpServer);
+      const listenPromise = util.promisify(listenFn);
+      return listenPromise(portNumber);
     }
 
     stop() {
-      const close = util.promisify(this._httpServer.close.bind(this._httpServer));
-      return close();
+      var closeFn = this._httpServer.close.bind(this._httpServer);
+      const closePromise = util.promisify(closeFn);
+      return closePromise();
     }
 
     getNodeServer() {
       return this._httpServer;
     }
-
   };
 
   function handleHttpRequests(httpServer, contentDir, notFoundPageToServe) {
     httpServer.on("request", function(request, response) {
-      send(request, request.url, { root: contentDir }).on("error", handleError).pipe(response);
+      send(
+        request,
+        request.url,
+        { root: contentDir }
+      ).on("error", handleError)
+        .pipe(response);
 
       function handleError(err) {
-        if (err.status === 404) serveErrorFile(response, 404, contentDir + "/" + notFoundPageToServe);
-        else throw err;
+        if (err.status === 404) {
+          serveErrorFile(response, 404, contentDir + "/" + notFoundPageToServe);
+        }
+        else {
+          throw err;
+        }
       }
     });
   }

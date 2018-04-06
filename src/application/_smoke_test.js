@@ -1,22 +1,22 @@
 (function() {
   "use strict";
 
-  var assert = require("_assert");
-  var chrome = require("selenium-webdriver/chrome");
+  const assert = require("_assert");
+  const chrome = require("selenium-webdriver/chrome");
 
-  var http = require("http");
-  var runServer = require("./_run_server.js");
-  var webdriver = require('selenium-webdriver');
-  var By = webdriver.By;
+  const http = require("http");
+  const runServer = require("./_run_server.js");
+  const webdriver = require('selenium-webdriver');
+  const By = webdriver.By;
 
-  var HOME_PAGE_URL = "http://localhost:5000";
-  var EXPECTED_BROWSER = "chrome";
+  const HOME_PAGE_URL = "http://localhost:5000";
+  const EXPECTED_BROWSER = "chrome";
 
   describe("Smoke test", function() {
     this.timeout(5 * 1000);
 
-    var serverProcess;
-    var driver;
+    let serverProcess;
+    let driver;
 
     before(function (done) {
       runServer.runProgrammatically(function(process) {
@@ -25,7 +25,7 @@
         try {
           driver = createDriver();
           driver.getCapabilities() .then(function(capabilities) {
-            var version = capabilities.get("browserName");
+            const version = capabilities.get("browserName");
             if (version !== EXPECTED_BROWSER) {
               console.log("Warning: Smoke test browser expected " +
                           EXPECTED_BROWSER + ", but was " + version);
@@ -53,8 +53,8 @@
 
     it("can get home page", function(done) {
       httpGet(HOME_PAGE_URL, function(response, receivedData) {
-        var marker = "App home page";
-        var foundHomePage = receivedData.indexOf(marker) !== -1;
+        const marker = "App home page";
+        const foundHomePage = receivedData.indexOf(marker) !== -1;
 
         assert.equal(
           foundHomePage,
@@ -67,9 +67,9 @@
 
     it("can find the header", async function() {
       driver.get(HOME_PAGE_URL);
-      var elements = await driver.findElements(By.id("header-text"));
-      var element = elements[0];
-      var text = await element.getText();
+      const elements = await driver.findElements(By.id("header-text"));
+      const element = elements[0];
+      const text = await element.getText();
       assert.equal(text, "Hello, world!");
     });
   });
@@ -86,9 +86,9 @@
   }
 
   function httpGet(url, callback) {
-    var request = http.get(url);
+    const request = http.get(url);
     request.on("response", function(response) {
-      var receivedData = "";
+      let receivedData = "";
       response.setEncoding("utf8");
 
       response.on("data", function(chunk) {
