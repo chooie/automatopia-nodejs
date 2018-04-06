@@ -53,18 +53,16 @@
       serverProcess.kill();
     });
 
-    it("can get home page", function(done) {
-      httpGet(HOME_PAGE_URL, function(response, receivedData) {
-        const marker = "App home page";
-        const foundHomePage = receivedData.indexOf(marker) !== -1;
+    it("can get home page", async function() {
+      let { receivedData } = await httpGet(HOME_PAGE_URL);
+      const marker = "App home page";
+      const foundHomePage = receivedData.indexOf(marker) !== -1;
 
-        assert.equal(
-          foundHomePage,
-          true,
-          `home page should have contained test marker '${marker}'`
-        );
-        done();
-      });
+      assert.equal(
+        foundHomePage,
+        true,
+        `home page should have contained test marker '${marker}'`
+      );
     });
 
     it("can find the header", async function() {
@@ -87,17 +85,19 @@
       .build();
   }
 
-  function httpGet(url, callback) {
-    const request = http.get(url);
-    request.on("response", function(response) {
-      let receivedData = "";
-      response.setEncoding("utf8");
+  function httpGet(url) {
+    return new Promise(function(resolve, reject) {
+      const request = http.get(url);
+      request.on("response", function(response) {
+        let receivedData = "";
+        response.setEncoding("utf8");
 
-      response.on("data", function(chunk) {
-        receivedData += chunk;
-      });
-      response.on("end", function() {
-        callback(response, receivedData);
+        response.on("data", function(chunk) {
+          receivedData += chunk;
+        });
+        response.on("end", function() {
+          resolve({ response, receivedData });
+        });
       });
     });
   }
