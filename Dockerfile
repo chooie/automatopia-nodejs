@@ -9,6 +9,7 @@ RUN wget -q -O - \
        >> /etc/apt/sources.list.d/google.list" \
     && apt-get update \
     && apt-get install -y google-chrome-stable \
+    && apt-get clean \
     && mkdir -p /usr/src/app
 
 WORKDIR /usr/src/app
