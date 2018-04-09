@@ -17,4 +17,3 @@ COPY ./package.json /usr/src/app/
 RUN chmod -R g+rw /usr/src/app
 
 ENTRYPOINT ["/bin/bash", "-c", "./tasks.sh \"$@\"", "--"]
-CMD []
