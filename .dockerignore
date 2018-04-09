@@ -1,3 +1,4 @@
-/.git/
-/node_modules/
-/generated/
+.git
+node_modules
+generated
+generated_build
