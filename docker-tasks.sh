@@ -5,8 +5,9 @@ THIS_DIR="$(dirname "$0")"
 docker container prune --force
 docker image prune --force
 
-docker build --tag 'automatopia-nodejs' \
-       -f "$THIS_DIR/Dockerfile" .
+docker build \
+       --tag 'automatopia-nodejs' \
+       --file "$THIS_DIR/Dockerfile" .
 
 if [ $1 == 'karma' ]; then
   docker run \
