@@ -1,7 +1,3 @@
-(function() {
-  "use strict";
-
-  exports.isTrue = function() {
-    return true;
-  };
-})();
+exports.isTrue = function() {
+  return true;
+};

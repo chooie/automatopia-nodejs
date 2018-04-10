@@ -1,13 +1,9 @@
-(function() {
-  "use strict";
+var foo = require("./foo.js");
 
-  var foo = require("./foo.js");
+exports.isTrue = function() {
+  return true;
+};
 
-  exports.isTrue = function() {
-    return true;
-  };
-
-  exports.sayHey = function() {
-    foo.hey();
-  };
-})();
+exports.sayHey = function() {
+  foo.hey();
+};

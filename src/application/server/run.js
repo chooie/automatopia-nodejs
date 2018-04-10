@@ -1,6 +1,4 @@
 (async function() {
-  "use strict";
-
   const Server = require("./server.js");
 
   var CONTENT_DIR = "./generated/dist/client";

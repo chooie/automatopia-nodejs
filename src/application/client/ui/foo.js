@@ -1,7 +1,3 @@
-(function() {
-  "use strict";
-
-  exports.hey = function() {
-    console.log("Hello, world");
-  };
-})();
+exports.hey = function() {
+  console.log("Hello, world");
+};
