@@ -4,8 +4,14 @@
     "node": "9.4.0"
   },
   "scripts": {
-    "precommit": "find src -type f \\( -iname \\*.js -o -iname \\*.css \\) -and -not -path \"src/**/vendor/*\" | xargs prettier --write",
-    "heroku-prebuild": "./tasks.sh build:all"
+    "heroku-prebuild": "./tasks.sh build:all",
+    "pretty": "find src -type f \\( -iname \\*.js -o -iname \\*.css \\) -and -not -path \"src/**/vendor/*\" | xargs prettier --write",
+    "precommit": "lint-staged && ./tasks.sh test:all"
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run pretty"
+    ]
   },
   "devDependencies": {
     "browserify": "16.1.0",
