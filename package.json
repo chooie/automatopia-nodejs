@@ -5,7 +5,7 @@
   },
   "scripts": {
     "heroku-prebuild": "./tasks.sh build:all",
-    "pretty": "find src -type f \\( -iname \\*.js -o -iname \\*.css \\) -and -not -path \"src/**/vendor/*\" | xargs prettier --write",
+    "pretty": "prettier --write \"src/**/*.js\"",
     "precommit": "lint-staged && ./tasks.sh test:all"
   },
   "lint-staged": {
