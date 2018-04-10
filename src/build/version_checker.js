@@ -6,8 +6,7 @@
   exports.check = function(options, success, failCallback) {
     if (options.strict) {
       failIfVersionsAreNotExactlyEqual(options, failCallback);
-    }
-    else {
+    } else {
       checkVersionsNonStrictly(options, failCallback);
     }
     return success();
@@ -25,8 +24,13 @@
     }
     if (versionsAreNotEqual(options.actual, options.expected)) {
       console.log(
-        "Warning: Newer " + options.name + " version than expected. Expected "
-          + options.expected + ", but was " + options.actual + "."
+        "Warning: Newer " +
+          options.name +
+          " version than expected. Expected " +
+          options.expected +
+          ", but was " +
+          options.actual +
+          "."
       );
     }
   }
@@ -41,8 +45,15 @@
 
   function failWithQualifier(options, qualifier, failCallback) {
     return failCallback(
-      "Incorrect " + options.name + " version. Expected " + qualifier + " " +
-        options.expected + ", but was " + options.actual + ".");
+      "Incorrect " +
+        options.name +
+        " version. Expected " +
+        qualifier +
+        " " +
+        options.expected +
+        ", but was " +
+        options.actual +
+        "."
+    );
   }
-
-}());
+})();

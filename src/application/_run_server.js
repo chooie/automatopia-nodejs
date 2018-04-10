@@ -29,11 +29,9 @@
 
   function run(stdioOptions) {
     const commandLine = parseProcFile();
-    return child_process.spawn(
-      commandLine.command,
-      commandLine.options,
-      {stdio: stdioOptions }
-    );
+    return child_process.spawn(commandLine.command, commandLine.options, {
+      stdio: stdioOptions
+    });
   }
 
   function parseProcFile() {
@@ -45,5 +43,4 @@
     });
     return webCommand;
   }
-
-}());
+})();

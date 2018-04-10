@@ -6,5 +6,4 @@
     reporter: "dot",
     timeout: 2000
   };
-
-}());
+})();

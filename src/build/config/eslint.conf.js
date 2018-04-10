@@ -4,22 +4,22 @@
   let ERROR = "error";
 
   exports.options = {
-    "parserOptions": {
-      "ecmaVersion": 2017
+    parserOptions: {
+      ecmaVersion: 2017
     },
 
-    "env": {
-      "browser": true,
-      "node": true,
-      "commonjs": true,
-      "mocha": true
+    env: {
+      browser: true,
+      node: true,
+      commonjs: true,
+      mocha: true
     },
 
-    "globals": {
-      "Promise": false
+    globals: {
+      Promise: false
     },
 
-    "rules": {
+    rules: {
       // "Possible Errors" (according to ESLint docs)
       "no-compare-neg-zero": ERROR,
       "no-cond-assign": ERROR,
@@ -46,7 +46,7 @@
       "valid-typeof": ERROR,
 
       // "Best Practices"
-      "eqeqeq": ERROR,
+      eqeqeq: ERROR,
       "no-caller": ERROR,
       "no-case-declarations": ERROR,
       "no-empty-pattern": ERROR,
@@ -73,7 +73,7 @@
       "no-useless-escape": ERROR,
       "no-with": ERROR,
       "prefer-promise-reject-errors": ERROR,
-      "radix": ERROR,
+      radix: ERROR,
       "require-await": ERROR,
 
       // "Variables"
@@ -84,14 +84,14 @@
       "no-undef-init": ERROR,
       "no-use-before-define": [
         ERROR,
-        { "functions": false, "classes": false, "variables": false}
+        { functions: false, classes: false, variables: false }
       ],
 
       // "Stylistic Issues"
       "new-cap": ERROR,
       "no-bitwise": ERROR,
       "no-mixed-spaces-and-tabs": ERROR,
-      "semi": [ ERROR, "always" ],
+      semi: [ERROR, "always"],
 
       // "ECMAScript 6"
       "constructor-super": ERROR,
@@ -105,5 +105,4 @@
       "require-yield": ERROR
     }
   };
-
-}());
+})();

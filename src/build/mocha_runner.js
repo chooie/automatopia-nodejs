@@ -51,5 +51,4 @@
   function restoreExceptionListeners(listeners) {
     listeners.forEach(process.addListener.bind(process, "uncaughtException"));
   }
-
-}());
+})();

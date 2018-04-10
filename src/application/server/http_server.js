@@ -7,7 +7,6 @@
   const util = require("util");
 
   module.exports = class HttpServer {
-
     constructor(contentDir, notFoundPageToServe) {
       this._httpServer = http.createServer();
 
@@ -33,18 +32,14 @@
 
   function handleHttpRequests(httpServer, contentDir, notFoundPageToServe) {
     httpServer.on("request", function(request, response) {
-      send(
-        request,
-        request.url,
-        { root: contentDir }
-      ).on("error", handleError)
+      send(request, request.url, { root: contentDir })
+        .on("error", handleError)
         .pipe(response);
 
       function handleError(err) {
         if (err.status === 404) {
           serveErrorFile(response, 404, contentDir + "/" + notFoundPageToServe);
-        }
-        else {
+        } else {
           throw err;
         }
       }
@@ -59,5 +54,4 @@
       response.end(data);
     });
   }
-
-}());
+})();

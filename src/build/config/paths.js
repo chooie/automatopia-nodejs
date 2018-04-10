@@ -80,13 +80,10 @@
   };
 
   e.lintFiles = function() {
-    return deglob([
-      "*.js",
-      `${e.applicationSrc}/**/*.js`,
-      "src/build/**/*.js"
-    ], [
-      "**/vendor/*.js"
-    ]);
+    return deglob(
+      ["*.js", `${e.applicationSrc}/**/*.js`, "src/build/**/*.js"],
+      ["**/vendor/*.js"]
+    );
   };
 
   e.lintOutput = function() {
@@ -106,13 +103,11 @@
     if (Array.isArray(patternsToFind)) {
       if (patternsToFind.length === 1) {
         globPattern = patternsToFind[0];
-      }
-      else {
+      } else {
         globPattern = "{" + patternsToFind.join(",") + "}";
       }
     }
 
     return glob.sync(globPattern, { ignore: patternsToIgnore });
   }
-
-}());
+})();

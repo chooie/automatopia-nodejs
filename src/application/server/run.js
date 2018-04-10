@@ -5,10 +5,9 @@
 
   var CONTENT_DIR = "./generated/dist/client";
 
-  const  port = process.argv[2];
+  const port = process.argv[2];
   const server = new Server();
 
   await server.start(CONTENT_DIR, "404.html", port);
   console.log(`Server started on port '${port}'`);
-
-}());
+})();

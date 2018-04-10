@@ -25,17 +25,18 @@ exports.STANDARD_FONT = "alwyn-new-rounded-web, Helvetica, sans-serif";
 exports.CORNER_ROUNDING = "2px";
 exports.BUTTON_DROP_SHADOW = " 0px 1px 0px 0px";
 
-
 exports.setupUnitTests = function setupUnitTests() {
-
   before(function(done) {
-    exports.frame = quixote.createFrame({
-      width: 500,
-      stylesheet: [
-        "/base/src/application/client/content/vendor/normalize-3.0.2.css",
-        "/base/src/application/client/content/screen.css"
-      ]
-    }, done);
+    exports.frame = quixote.createFrame(
+      {
+        width: 500,
+        stylesheet: [
+          "/base/src/application/client/content/vendor/normalize-3.0.2.css",
+          "/base/src/application/client/content/screen.css"
+        ]
+      },
+      done
+    );
   });
 
   beforeEach(function() {
@@ -53,7 +54,7 @@ exports.backgroundColor = function backgroundColor(element) {
 
 exports.fontFamily = function fontFamily(element) {
   var family = element.getRawStyle("font-family");
-  family = family.replace(/"/g, '');
+  family = family.replace(/"/g, "");
 
   var fonts = family.split(",");
   for (var i = 0; i < fonts.length; i++) {
@@ -117,9 +118,8 @@ exports.under = function under(element, relativeToElement) {
 
   if (elementZ === relativeZ) {
     return !isElementAfterElementInDomTree();
-  }
-  else {
-    return (elementZ < relativeZ);
+  } else {
+    return elementZ < relativeZ;
   }
 
   function getZIndex(element) {
@@ -145,8 +145,10 @@ exports.under = function under(element, relativeToElement) {
       if (child === relativeNode) foundRelative = true;
     }
     if (!foundRelative) {
-      throw new Error("Can't yet compare elements that have same z-index " +
-                      "and are not siblings");
+      throw new Error(
+        "Can't yet compare elements that have same z-index " +
+          "and are not siblings"
+      );
     }
     return elementAfterRelative;
   }
@@ -171,8 +173,7 @@ exports.backgroundPosition = function backgroundImage(element) {
 
   if (position === "" || position === "50%" || position === "50% 50%") {
     return "center";
-  }
-  else {
+  } else {
     return position;
   }
 };
@@ -182,15 +183,15 @@ exports.hasBorder = function hasBorder(element) {
   var right = element.getRawStyle("border-right-style");
   var bottom = element.getRawStyle("border-bottom-style");
   var left = element.getRawStyle("border-left-style");
-  return ! (top === "none" &&
-            right === "none"
-            && bottom === "none"
-            && left === "none");
+  return !(
+    top === "none" &&
+    right === "none" &&
+    bottom === "none" &&
+    left === "none"
+  );
 };
 
-exports.isTextVerticallyCentered = function isTextVerticallyCentered(
-  element
-) {
+exports.isTextVerticallyCentered = function isTextVerticallyCentered(element) {
   var elementHeight = Math.round(element.getRawPosition().height);
   return elementHeight + "px" === exports.lineHeight(element);
 };
@@ -258,9 +259,12 @@ exports.assertActivateDepresses = function assertActivateDepresses(
   description
 ) {
   applyClass(button, "_active_", function() {
-    button.assert({
-      top: expectedDescriptor
-    }, description);
+    button.assert(
+      {
+        top: expectedDescriptor
+      },
+      description
+    );
     assert.equal(exports.dropShadow(button), "none", description);
   });
 };
@@ -273,8 +277,7 @@ function applyClass(element, className, fn) {
     forceReflow(domElement);
 
     fn();
-  }
-  finally {
+  } finally {
     domElement.className = oldClassName;
     forceReflow(domElement);
   }
@@ -284,13 +287,7 @@ function forceReflow(domElement) {
   var makeLintHappy = domElement.offsetHeight;
 }
 
-function getCompoundStyle(
-  element,
-  subStyle1,
-  subStyle2,
-  subStyle3,
-  subStyle4
-) {
+function getCompoundStyle(element, subStyle1, subStyle2, subStyle3, subStyle4) {
   // We can't look at compound properties directly because they return "" on
   // Firefox and IE 9
   var one = element.getRawStyle(subStyle1);
@@ -301,8 +298,7 @@ function getCompoundStyle(
   var result;
   if (one === two && one === three && one === four) {
     result = one;
-  }
-  else {
+  } else {
     result = one + " " + two + " " + four + " " + three;
   }
   return result;
@@ -311,7 +307,7 @@ function getCompoundStyle(
 // Based on MDN code at https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
 function trim(str) {
   var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
-  return str.replace(rtrim, '');
+  return str.replace(rtrim, "");
 }
 
 function normalizeColorString(color) {

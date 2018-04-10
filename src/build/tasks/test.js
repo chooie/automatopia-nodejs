@@ -6,36 +6,37 @@
   var paths = require("../config/paths.js");
 
   namespace("test", function() {
-
     desc("Check everything works as expected");
-    task("all", [ "clean", "quick", "smoke" ], function () {});
+    task("all", ["clean", "quick", "smoke"], function() {});
 
     desc("Quick check - uses cached results");
-    task("quick", [ "versions", "lint", "incremental:unitAndIntegration" ]);
+    task("quick", ["versions", "lint", "incremental:unitAndIntegration"]);
 
-
-    namespace("incremental",function () {
-
+    namespace("incremental", function() {
       desc("Test everything (except smoke tests)");
-      task("unitAndIntegration", [ "shared", "server", "client" ]);
+      task("unitAndIntegration", ["shared", "server", "client"]);
 
       desc("Test client code");
-      task("client", [ "clientUi", "testClientCss"]);
+      task("client", ["clientUi", "testClientCss"]);
 
       desc("Test shared code");
-      task("shared", [ "sharedOnServer", "sharedOnClient" ]);
+      task("shared", ["sharedOnServer", "sharedOnClient"]);
 
       desc("Test server code");
       incrementalTask(
         "server",
-        [ paths.tempTestfileDir ],
+        [paths.tempTestfileDir],
         paths.serverTestDependencies(),
         function(complete, fail) {
           console.log("Testing server JavaScript: ");
-          mochaRunner().runTests({
-            files: paths.serverTestFiles(),
-            options: mochaConfig()
-          }, complete, fail);
+          mochaRunner().runTests(
+            {
+              files: paths.serverTestFiles(),
+              options: mochaConfig()
+            },
+            complete,
+            fail
+          );
         }
       );
 
@@ -45,10 +46,14 @@
         paths.sharedJsTestDependencies(),
         function(complete, fail) {
           console.log("Testing shared JavaScript on server: ");
-          mochaRunner().runTests({
-            files: paths.sharedTestFiles(),
-            options: mochaConfig()
-          }, complete, fail);
+          mochaRunner().runTests(
+            {
+              files: paths.sharedTestFiles(),
+              options: mochaConfig()
+            },
+            complete,
+            fail
+          );
         }
       );
 
@@ -84,14 +89,22 @@
     });
 
     desc("End-to-end smoke tests");
-    task("smoke", [ "build:all" ], function() {
-      console.log("Smoke testing app: ");
-      mochaRunner().runTests({
-        files: paths.smokeTestFiles(),
-        options: mochaConfig()
-      }, complete, fail);
-    }, { async: true });
-
+    task(
+      "smoke",
+      ["build:all"],
+      function() {
+        console.log("Smoke testing app: ");
+        mochaRunner().runTests(
+          {
+            files: paths.smokeTestFiles(),
+            options: mochaConfig()
+          },
+          complete,
+          fail
+        );
+      },
+      { async: true }
+    );
   });
 
   function incrementalTask(
@@ -105,9 +118,14 @@
       taskName,
       taskDependencies.concat(paths.incrementalDir, incrementalFile)
     );
-    file(incrementalFile, fileDependencies, function() {
-      action(succeed, fail);
-    }, {async: true});
+    file(
+      incrementalFile,
+      fileDependencies,
+      function() {
+        action(succeed, fail);
+      },
+      { async: true }
+    );
 
     function succeed() {
       fs().writeFileSync(incrementalFile, "ok");
@@ -116,12 +134,16 @@
   }
 
   function runKarmaOnTaggedSubsetOfTests(tag, complete, fail) {
-    karmaRunner().run({
-      configFile: paths.karmaConfig,
-      expectedBrowsers: testedBrowsers(),
-      strict: strict,
-      clientArgs: [ "--grep=" + tag + ":" ]
-    }, complete, fail);
+    karmaRunner().run(
+      {
+        configFile: paths.karmaConfig,
+        expectedBrowsers: testedBrowsers(),
+        strict: strict,
+        clientArgs: ["--grep=" + tag + ":"]
+      },
+      complete,
+      fail
+    );
   }
 
   function fs() {
@@ -143,5 +165,4 @@
   function testedBrowsers() {
     return require("../config/tested_browsers.js");
   }
-
-}());
+})();

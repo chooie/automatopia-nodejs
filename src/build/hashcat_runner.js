@@ -14,10 +14,8 @@
       });
       process.stdout.write("\n");
       return success();
-    }
-    catch(err) {
+    } catch (err) {
       return failure(err);
     }
   };
-
-}());
+})();

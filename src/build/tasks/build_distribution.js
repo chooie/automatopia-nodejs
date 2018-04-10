@@ -5,11 +5,10 @@
   var paths = require("../config/paths.js");
 
   namespace("build", function() {
-
     desc("Bundle and build code");
-    task("all", [ "server", "client" ]);
+    task("all", ["server", "client"]);
 
-    task("server", [ paths.buildServerDir, paths.buildSharedDir ], function() {
+    task("server", [paths.buildServerDir, paths.buildSharedDir], function() {
       console.log("Collating server files: .");
 
       shell().rm("-rf", paths.buildDir + "/server/*");
@@ -24,26 +23,32 @@
       );
     });
 
-    task("client", [ "cacheBust" ]);
+    task("client", ["cacheBust"]);
 
-    task("cacheBust", [ "collateClientFiles", "bundleClientJs" ], function() {
-      process.stdout.write("Cache-busting CSS and JavaScript: ");
+    task(
+      "cacheBust",
+      ["collateClientFiles", "bundleClientJs"],
+      function() {
+        process.stdout.write("Cache-busting CSS and JavaScript: ");
 
-      var hashCatRunner = require("../hashcat_runner.js");
-      hashCatRunner.go({
-        files: [ paths.buildClientIndexHtml,
-                 paths.buildClient404Html
-               ]
-      }, removeUnwantedFiles, fail);
+        var hashCatRunner = require("../hashcat_runner.js");
+        hashCatRunner.go(
+          {
+            files: [paths.buildClientIndexHtml, paths.buildClient404Html]
+          },
+          removeUnwantedFiles,
+          fail
+        );
 
-      function removeUnwantedFiles() {
-        shell().rm(paths.buildIntermediateFilesToErase());
-        complete();
-      }
+        function removeUnwantedFiles() {
+          shell().rm(paths.buildIntermediateFilesToErase());
+          complete();
+        }
+      },
+      { async: true }
+    );
 
-    }, { async: true });
-
-    task("collateClientFiles", [ paths.buildClientDir ], function() {
+    task("collateClientFiles", [paths.buildClientDir], function() {
       console.log("Collating client files: .");
 
       shell().rm("-rf", paths.buildClientDir + "/*");
@@ -55,23 +60,33 @@
       );
     });
 
-    task("bundleClientJs", [ paths.buildClientDir ], function() {
-      process.stdout.write("Bundling client files with Browserify: ");
+    task(
+      "bundleClientJs",
+      [paths.buildClientDir],
+      function() {
+        process.stdout.write("Bundling client files with Browserify: ");
 
-      var browserifyRunner = require("../browserify_runner.js");
-      browserifyRunner.bundle({
-        requires: [
-          { path: "./src/application/client/ui/main.js", expose: "./main.js" },
-        ],
-        outfile: paths.buildClientDir + "/bundle.js",
-        options: { debug: true }
-      }, complete, fail);
-    }, { async: true });
-
+        var browserifyRunner = require("../browserify_runner.js");
+        browserifyRunner.bundle(
+          {
+            requires: [
+              {
+                path: "./src/application/client/ui/main.js",
+                expose: "./main.js"
+              }
+            ],
+            outfile: paths.buildClientDir + "/bundle.js",
+            options: { debug: true }
+          },
+          complete,
+          fail
+        );
+      },
+      { async: true }
+    );
   });
 
   function shell() {
     return require("shelljs");
   }
-
-}());
+})();

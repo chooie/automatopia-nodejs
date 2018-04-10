@@ -2,22 +2,23 @@ module.exports = function(config) {
   "use strict";
 
   config.set({
-
     // base path, that will be used to resolve files and exclude
-    basePath: '../../../',
+    basePath: "../../../",
 
     // frameworks to use
-    frameworks: [ 'mocha', 'commonjs' ],
+    frameworks: ["mocha", "commonjs"],
 
     // list of files / patterns to load in the browser
     files: [
-      'src/application/node_modules/**/*.js',
-      'src/application/client/**/*.js',
-      'src/application/shared/**/*.js',
-      { pattern: 'src/application/client/content/vendor/normalize-3.0.2.css',
-        included: false },
-      { pattern: 'src/application/client/content/screen.css', included: false },
-      { pattern: 'src/application/client/content/index.html', included: false },
+      "src/application/node_modules/**/*.js",
+      "src/application/client/**/*.js",
+      "src/application/shared/**/*.js",
+      {
+        pattern: "src/application/client/content/vendor/normalize-3.0.2.css",
+        included: false
+      },
+      { pattern: "src/application/client/content/screen.css", included: false },
+      { pattern: "src/application/client/content/index.html", included: false }
     ],
 
     // list of files to exclude
@@ -25,18 +26,20 @@ module.exports = function(config) {
 
     // preprocessors
     preprocessors: {
-      'src/application/node_modules/*.js': [ 'commonjs' ],
-      'src/application/node_modules/vendor/big-object-diff-0.7.0.js': [ 'commonjs' ],
-      'src/application/node_modules/vendor/proclaim-2.0.0.js': [ 'commonjs' ],
-      'src/application/client/content/*.js': [ 'commonjs' ],
-      'src/application/client/ui/*.js': [ 'commonjs' ],
-      'src/application/client/content/vendor/quixote-0.9.0.js': [ 'commonjs' ],
-      'src/application/shared/**/*.js': ['commonjs']
+      "src/application/node_modules/*.js": ["commonjs"],
+      "src/application/node_modules/vendor/big-object-diff-0.7.0.js": [
+        "commonjs"
+      ],
+      "src/application/node_modules/vendor/proclaim-2.0.0.js": ["commonjs"],
+      "src/application/client/content/*.js": ["commonjs"],
+      "src/application/client/ui/*.js": ["commonjs"],
+      "src/application/client/content/vendor/quixote-0.9.0.js": ["commonjs"],
+      "src/application/shared/**/*.js": ["commonjs"]
     },
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: [ 'dots' ],
+    reporters: ["dots"],
 
     // web server port
     port: 9876,

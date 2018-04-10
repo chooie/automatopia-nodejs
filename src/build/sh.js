@@ -10,13 +10,13 @@
     options
   ) {
     options = options || {};
-    var suppressOutput = (options.suppressOutput === true);
+    var suppressOutput = options.suppressOutput === true;
 
     var stdout = "";
-    var child = jake.createExec(
-      oneCommand,
-      { printStdout: true, printStderr: true }
-    );
+    var child = jake.createExec(oneCommand, {
+      printStdout: true,
+      printStderr: true
+    });
     child.on("stdout", function(data) {
       if (!suppressOutput) process.stdout.write(data);
       stdout += data;
@@ -41,15 +41,17 @@
 
     function serializedSh(command) {
       if (command) {
-        exports.run(command, function(oneStdout) {
-          stdout.push(oneStdout);
-          serializedSh(commands.shift());
-        }, failureCallback);
-      }
-      else {
+        exports.run(
+          command,
+          function(oneStdout) {
+            stdout.push(oneStdout);
+            serializedSh(commands.shift());
+          },
+          failureCallback
+        );
+      } else {
         successCallback(stdout);
       }
     }
   };
-
-}());
+})();

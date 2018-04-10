@@ -5,7 +5,7 @@
   const chrome = require("selenium-webdriver/chrome");
   const http = require("http");
   const https = require("https");
-  const webdriver = require('selenium-webdriver');
+  const webdriver = require("selenium-webdriver");
 
   const By = webdriver.By;
 
@@ -21,21 +21,29 @@
     let serverProcess;
     let driver;
 
-    before(function (done) {
+    before(function(done) {
       runServer.runProgrammatically(function(process) {
         serverProcess = process;
 
         try {
           driver = createDriver();
-          driver.getCapabilities().then(function(capabilities) {
-            const version = capabilities.get("browserName");
-            if (version !== EXPECTED_BROWSER) {
-              console.log("Warning: Smoke test browser expected " +
-                          EXPECTED_BROWSER + ", but was " + version);
-            }
-          }).catch(function(err) {
-            console.log(err);
-          }).then(done);
+          driver
+            .getCapabilities()
+            .then(function(capabilities) {
+              const version = capabilities.get("browserName");
+              if (version !== EXPECTED_BROWSER) {
+                console.log(
+                  "Warning: Smoke test browser expected " +
+                    EXPECTED_BROWSER +
+                    ", but was " +
+                    version
+                );
+              }
+            })
+            .catch(function(err) {
+              console.log(err);
+            })
+            .then(done);
         } catch (error) {
           throw error;
         }
@@ -44,9 +52,10 @@
 
     after(function(done) {
       serverProcess.on("exit", function(code, signal) {
-        driver.quit()
+        driver
+          .quit()
           .then(function() {})
-          .catch(function(error){
+          .catch(function(error) {
             console.log(error);
           })
           .then(done);
@@ -78,7 +87,7 @@
   function createDriver() {
     require("chromedriver");
     const options = new chrome.Options();
-    options.addArguments('headless', 'disable-gpu', 'no-sandbox');
+    options.addArguments("headless", "disable-gpu", "no-sandbox");
 
     return new webdriver.Builder()
       .forBrowser("chrome")
@@ -111,5 +120,4 @@
       });
     });
   }
-
-}());
+})();

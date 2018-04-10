@@ -10,5 +10,4 @@
   exports.sayHey = function() {
     foo.hey();
   };
-
-}());
+})();

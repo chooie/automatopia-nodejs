@@ -4,7 +4,6 @@
   const HttpServer = require("./http_server.js");
 
   module.exports = class Server {
-
     async start(contentDir, notFoundPageToServe, portNumber) {
       if (!portNumber) throw new Error("port number is required");
 
@@ -19,7 +18,5 @@
 
       await this._httpServer.stop();
     }
-
   };
-
-}());
+})();
