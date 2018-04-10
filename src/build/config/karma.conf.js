@@ -48,10 +48,12 @@ module.exports = function(config) {
     colors: true,
 
     // level of logging
-    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+    // possible values: config.LOG_DISABLE || config.LOG_ERROR ||
+    // config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
-    // enable / disable watching file and executing tests whenever any file changes
+    // enable / disable watching file and executing tests whenever any file
+    // changes
     autoWatch: false,
 
     // Start these browsers, currently available:
@@ -67,7 +69,8 @@ module.exports = function(config) {
     // If browser does not capture in given timeout [ms], kill it
     captureTimeout: 60000,
 
-    // If no message received from browser in [ms] while running tests, disconnect it
+    // If no message received from browser in [ms] while running tests,
+    // disconnect it
     browserNoActivityTimeout: 30000,
 
     // Continuous Integration mode
