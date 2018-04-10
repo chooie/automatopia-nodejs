@@ -4,7 +4,7 @@
     "node": "9.4.0"
   },
   "scripts": {
-    "precommit": "find src -type f \\( -iname \\*.js -o -iname \\*.css \\) -and -not -path \"src/**/vendor/*\" | xargs node_modules/prettier/bin-prettier.js --write",
+    "precommit": "find src -type f \\( -iname \\*.js -o -iname \\*.css \\) -and -not -path \"src/**/vendor/*\" | xargs prettier --write",
     "heroku-prebuild": "./tasks.sh build:all"
   },
   "devDependencies": {
@@ -17,6 +17,7 @@
     "karma": "2.0.0",
     "karma-commonjs": "1.0.0",
     "karma-mocha": "1.3.0",
+    "lint-staged": "^7.0.4",
     "mocha": "5.0.0",
     "prettier": "1.11.1",
     "selenium-webdriver": "4.0.0-alpha.1",
