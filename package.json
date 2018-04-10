@@ -4,6 +4,7 @@
     "node": "9.4.0"
   },
   "scripts": {
+    "precommit": "find src -type f \\( -iname \\*.js -o -iname \\*.css \\) -and -not -path \"src/**/vendor/*\" | xargs node_modules/prettier/bin-prettier.js --write",
     "heroku-prebuild": "./tasks.sh build:all"
   },
   "devDependencies": {
