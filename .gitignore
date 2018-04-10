@@ -5,7 +5,7 @@
 .idea/workspace.xml
 
 # Emacs
-**/*/.#*
+.\#*
 
 # npm
 node_modules/**/.bin/

@@ -9,7 +9,7 @@
     "precommit": "lint-staged && ./tasks.sh test:all"
   },
   "lint-staged": {
-    "*.{js, css}": [
+    "*.{js,css}": [
       "npm run pretty",
       "git add"
     ]
