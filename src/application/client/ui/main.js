@@ -1,4 +1,4 @@
-var foo = require("./foo.js");
+const foo = require("./foo.js");
 
 exports.isTrue = function() {
   return true;

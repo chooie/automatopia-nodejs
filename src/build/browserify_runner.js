@@ -1,8 +1,8 @@
-var fs = require("fs");
-var browserify = require("browserify");
+const fs = require("fs");
+const browserify = require("browserify");
 
 exports.bundle = function(config, success, failure) {
-  var b = browserify(config.options);
+  const b = browserify(config.options);
 
   config.requires.forEach(function(oneRequire) {
     process.stdout.write(".");

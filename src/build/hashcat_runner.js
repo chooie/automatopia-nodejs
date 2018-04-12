@@ -1,4 +1,4 @@
-var hashcat = require("hashcat/lib/libhashcat.js");
+const hashcat = require("hashcat/lib/libhashcat.js");
 
 exports.go = function(config, success, failure) {
   try {

@@ -1,7 +1,7 @@
-var glob = require("glob");
-var path = require("path");
+const glob = require("glob");
+const path = require("path");
 
-var e = exports;
+const e = exports;
 
 e.generatedDir = "generated";
 e.tempTestfileDir = `${e.generatedDir}/test`;
@@ -96,7 +96,7 @@ e.lintDirectories = function() {
 };
 
 function deglob(patternsToFind, patternsToIgnore) {
-  var globPattern = patternsToFind;
+  let globPattern = patternsToFind;
   if (Array.isArray(patternsToFind)) {
     if (patternsToFind.length === 1) {
       globPattern = patternsToFind[0];

@@ -1,4 +1,4 @@
-var semver = require("semver");
+const semver = require("semver");
 
 exports.check = function(options, success, failCallback) {
   if (options.strict) {

@@ -1,5 +1,5 @@
 /*global namespace, desc, task, fail, complete*/
-var paths = require("../config/paths.js");
+const paths = require("../config/paths.js");
 
 namespace("build", function() {
   desc("Bundle and build code");
@@ -28,7 +28,7 @@ namespace("build", function() {
     function() {
       process.stdout.write("Cache-busting CSS and JavaScript: ");
 
-      var hashCatRunner = require("../hashcat_runner.js");
+      const hashCatRunner = require("../hashcat_runner.js");
       hashCatRunner.go(
         {
           files: [paths.buildClientIndexHtml, paths.buildClient404Html]
@@ -63,7 +63,7 @@ namespace("build", function() {
     function() {
       process.stdout.write("Bundling client files with Browserify: ");
 
-      var browserifyRunner = require("../browserify_runner.js");
+      const browserifyRunner = require("../browserify_runner.js");
       browserifyRunner.bundle(
         {
           requires: [

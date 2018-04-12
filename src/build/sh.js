@@ -1,14 +1,15 @@
-var jake = require("jake");
+const jake = require("jake");
 
 exports.run = function(oneCommand, successCallback, failureCallback, options) {
   options = options || {};
-  var suppressOutput = options.suppressOutput === true;
+  const suppressOutput = options.suppressOutput === true;
 
-  var stdout = "";
-  var child = jake.createExec(oneCommand, {
+  const child = jake.createExec(oneCommand, {
     printStdout: true,
     printStderr: true
   });
+
+  let stdout = "";
   child.on("stdout", function(data) {
     if (!suppressOutput) process.stdout.write(data);
     stdout += data;
@@ -28,7 +29,7 @@ exports.run = function(oneCommand, successCallback, failureCallback, options) {
 };
 
 exports.runMany = function(commands, successCallback, failureCallback) {
-  var stdout = [];
+  const stdout = [];
   serializedSh(commands.shift());
 
   function serializedSh(command) {

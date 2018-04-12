@@ -1,9 +1,9 @@
-var Mocha = require("mocha");
-var jake = require("jake");
+const Mocha = require("mocha");
+const jake = require("jake");
 
 exports.runTests = function runTests(options, success, failure) {
-  var mocha = new Mocha(options.options);
-  var files = deglob(options.files);
+  const mocha = new Mocha(options.options);
+  const files = deglob(options.files);
   files.forEach(mocha.addFile.bind(mocha));
 
   // This is a bit of a hack. The issue is this: during test execution, if
@@ -26,7 +26,7 @@ exports.runTests = function runTests(options, success, failure) {
   // 'domain' module. Something to look into if you're reading this. Another
   // solution is to just spawn Mocha in a separate process, but I didn't want
   // the time penalty involved. Besides, this seems to be working okay.
-  var savedListeners = disableExceptionListeners();
+  const savedListeners = disableExceptionListeners();
 
   mocha.run(function(failures) {
     restoreExceptionListeners(savedListeners);
@@ -40,7 +40,7 @@ function deglob(globs) {
 }
 
 function disableExceptionListeners() {
-  var listeners = process.listeners("uncaughtException");
+  const listeners = process.listeners("uncaughtException");
   process.removeAllListeners("uncaughtException");
   return listeners;
 }

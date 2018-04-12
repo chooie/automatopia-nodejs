@@ -1,6 +1,6 @@
 /*global namespace, desc, task, file, fail, complete, */
-var strict = !process.env.loose;
-var paths = require("../config/paths.js");
+const strict = !process.env.loose;
+const paths = require("../config/paths.js");
 
 namespace("test", function() {
   desc("Check everything works as expected");
@@ -101,7 +101,7 @@ namespace("test", function() {
 });
 
 function incrementalTask(taskName, taskDependencies, fileDependencies, action) {
-  var incrementalFile = paths.incrementalDir + "/" + taskName + ".task";
+  const incrementalFile = paths.incrementalDir + "/" + taskName + ".task";
   task(
     taskName,
     taskDependencies.concat(paths.incrementalDir, incrementalFile)

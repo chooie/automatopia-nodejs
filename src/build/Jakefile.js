@@ -1,14 +1,14 @@
 /*global desc, task, jake, rule, fail, complete, directory*/
-var startTime = Date.now();
+const startTime = Date.now();
 
 // We've put most of our require statements in functions (or tasks) so we
 // don't have the overhead of loading modules we don't need. At the time this
 // refactoring was done, module loading took about half a second, which was
 // 10% of our desired maximum of five seconds for a quick build. The require
 // statements here are just the ones that are used to set up the tasks.
-var paths = require("./config/paths.js");
+const paths = require("./config/paths.js");
 
-var strict = !process.env.loose;
+const strict = !process.env.loose;
 if (strict) console.log("For more forgiving test settings, use 'loose=true'");
 
 //*** DIRECTORIES
@@ -23,7 +23,7 @@ directory(paths.incrementalDir);
 //*** GENERAL
 
 jake.addListener("complete", function() {
-  var elapsedSeconds = (Date.now() - startTime) / 1000;
+  const elapsedSeconds = (Date.now() - startTime) / 1000;
   console.log("\n\nBUILD OK (" + elapsedSeconds.toFixed(2) + "s)");
 });
 
@@ -31,7 +31,7 @@ desc("Show available tasks");
 task(
   "default",
   function() {
-    var sh = require("./sh.js");
+    const sh = require("./sh.js");
     sh.run("./tasks.sh -ls", function() {
       // Don't notify Jake so complete event is not triggered
       // Useful for not showing build complete message when we just want to see
@@ -46,7 +46,7 @@ task(
   "run",
   ["nodeVersion", "build:all"],
   function() {
-    var runServer = require("../application/_run_server.js");
+    const runServer = require("../application/_run_server.js");
 
     console.log("Running server. Press Ctrl-C to stop.");
     runServer.runInteractively();
@@ -88,7 +88,7 @@ task(
   [],
   function() {
     console.log("Checking Node.js version: .");
-    var version = require("./version_checker.js");
+    const version = require("./version_checker.js");
 
     version.check(
       {
@@ -120,15 +120,15 @@ task("incrementalLint", paths.lintOutput());
 createDirectoryDependencies(paths.lintDirectories());
 
 rule(".lint", determineLintDependency, function() {
-  var lint = require("./lint_runner.js");
-  var lintConfig = require("./config/eslint.conf.js");
+  const lint = require("./lint_runner.js");
+  const lintConfig = require("./config/eslint.conf.js");
 
-  var passed = lint.validateFile(this.source, lintConfig.options);
+  const passed = lint.validateFile(this.source, lintConfig.options);
   if (passed) fs().writeFileSync(this.name, "lint ok");
   else fail("Lint failed");
 });
 function determineLintDependency(name) {
-  var result = name.replace(/^generated\/incremental\/lint\//, "");
+  const result = name.replace(/^generated\/incremental\/lint\//, "");
   return result.replace(/\.lint$/, "");
 }
 
