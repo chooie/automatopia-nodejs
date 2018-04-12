@@ -28,7 +28,7 @@ namespace("build", function() {
     function() {
       process.stdout.write("Cache-busting CSS and JavaScript: ");
 
-      const hashCatRunner = require("../hashcat_runner.js");
+      const hashCatRunner = require("./utils/hashcat_runner.js");
       hashCatRunner.go(
         {
           files: [paths.buildClientIndexHtml, paths.buildClient404Html]
@@ -63,7 +63,7 @@ namespace("build", function() {
     function() {
       process.stdout.write("Bundling client files with Browserify: ");
 
-      const browserifyRunner = require("../browserify_runner.js");
+      const browserifyRunner = require("./utils/browserify_runner.js");
       browserifyRunner.bundle(
         {
           requires: [
