@@ -3,28 +3,27 @@ const fs = require("fs");
 const send = require("send");
 const util = require("util");
 
-module.exports = class HttpServer {
-  constructor(contentDir, notFoundPageToServe) {
-    this._httpServer = http.createServer();
+exports.make = function make(contentDir, notFoundPageToServe) {
+  let httpServer = http.createServer();
+  handleHttpRequests(httpServer, contentDir, notFoundPageToServe);
 
-    handleHttpRequests(this._httpServer, contentDir, notFoundPageToServe);
-  }
+  return {
+    start(portNumber) {
+      const listenFn = httpServer.listen.bind(httpServer);
+      const listenPromise = util.promisify(listenFn);
+      return listenPromise(portNumber);
+    },
 
-  start(portNumber) {
-    const listenFn = this._httpServer.listen.bind(this._httpServer);
-    const listenPromise = util.promisify(listenFn);
-    return listenPromise(portNumber);
-  }
+    stop() {
+      const closeFn = httpServer.close.bind(httpServer);
+      const closePromise = util.promisify(closeFn);
+      return closePromise();
+    },
 
-  stop() {
-    var closeFn = this._httpServer.close.bind(this._httpServer);
-    const closePromise = util.promisify(closeFn);
-    return closePromise();
-  }
-
-  getNodeServer() {
-    return this._httpServer;
-  }
+    getNodeServer() {
+      return httpServer;
+    }
+  };
 };
 
 function handleHttpRequests(httpServer, contentDir, notFoundPageToServe) {

@@ -1,5 +1,5 @@
-var assert = require("_assert");
-var main = require("./main.js");
+const assert = require("_assert");
+const main = require("./main.js");
 
 describe("Main", function() {
   it("is true", function() {

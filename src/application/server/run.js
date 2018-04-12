@@ -1,11 +1,11 @@
 (async function() {
-  const Server = require("./server.js");
+  const server = require("./server.js");
 
-  var CONTENT_DIR = "./generated/dist/client";
+  const CONTENT_DIR = "./generated/dist/client";
 
   const port = process.argv[2];
-  const server = new Server();
+  const theServer = server.make();
 
-  await server.start(CONTENT_DIR, "404.html", port);
+  await theServer.start(CONTENT_DIR, "404.html", port);
   console.log(`Server started on port '${port}'`);
 })();
