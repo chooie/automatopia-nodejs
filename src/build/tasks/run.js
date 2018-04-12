@@ -1,4 +1,4 @@
-/*global desc, task */
+/*global desc, task, complete */
 
 let configuration = require("../../application/shared/config.js").getConfig(
   "development"
@@ -13,8 +13,10 @@ task(
 
     console.log("Running server. Press Ctrl-C to stop.");
     runServer.runInteractively(configuration);
-    // We never call complete() because we want the task to hang until the user
-    // presses 'Ctrl-C'.
+    complete();
   },
   { async: true }
 );
+
+desc("Watch test and run (run with ./watch.sh)");
+task("run-test", ["clean", "run", "test:all"]);
