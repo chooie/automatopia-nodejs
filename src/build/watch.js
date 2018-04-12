@@ -15,4 +15,7 @@ nodemon({
   }
 }).on("restart", function(files) {
   console.log("*** Restarting due to", files);
+  console.log(">");
+  console.log(">");
+  console.log(">");
 });

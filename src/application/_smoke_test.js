@@ -6,10 +6,10 @@ const webdriver = require("selenium-webdriver");
 
 const By = webdriver.By;
 
-const config = require("./shared/config.js");
+const config = require("./shared/config.js").getConfig("automated testing");
 const runServer = require("./_run_server.js");
 
-const HOME_PAGE_URL = `http://localhost:${config.defaultPort}`;
+const HOME_PAGE_URL = `http://localhost:${config.port}`;
 const EXPECTED_BROWSER = "chrome";
 
 describe("Smoke test", function() {
@@ -19,7 +19,7 @@ describe("Smoke test", function() {
   let driver;
 
   before(function(done) {
-    runServer.runProgrammatically(function(process) {
+    runServer.runProgrammatically(config, function(process) {
       serverProcess = process;
 
       try {

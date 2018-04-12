@@ -4,12 +4,12 @@ const procfile = require("procfile");
 
 const config = require("../application/shared/config.js");
 
-exports.runInteractively = function() {
-  return run("inherit");
+exports.runInteractively = function(configuration) {
+  return run(configuration, "inherit");
 };
 
-exports.runProgrammatically = function(callback) {
-  const serverProcess = runOnlyWithStdErr();
+exports.runProgrammatically = function(configuration, callback) {
+  const serverProcess = runOnlyWithStdErr(configuration);
 
   serverProcess.stdout.setEncoding("utf8");
   serverProcess.stdout.on("data", function(chunk) {
@@ -19,23 +19,24 @@ exports.runProgrammatically = function(callback) {
   });
 };
 
-function runOnlyWithStdErr() {
-  const serverProcess = run(["pipe", "pipe", process.stderr]);
+function runOnlyWithStdErr(configuration) {
+  const serverProcess = run(configuration, ["pipe", "pipe", process.stderr]);
   return serverProcess;
 }
 
-function run(stdioOptions) {
-  const commandLine = parseProcFile();
+function run(configuration, stdioOptions) {
+  const defaultPort = configuration.port;
+  const commandLine = parseProcFile(defaultPort);
   return child_process.spawn(commandLine.command, commandLine.options, {
     stdio: stdioOptions
   });
 }
 
-function parseProcFile() {
+function parseProcFile(defaultPort) {
   const fileData = fs.readFileSync("Procfile", "utf8");
   const webCommand = procfile.parse(fileData).web;
   webCommand.options = webCommand.options.map(function(element) {
-    if (element === "$PORT") return config.defaultPort;
+    if (element === "$PORT") return defaultPort;
     else return element;
   });
   return webCommand;
