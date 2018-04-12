@@ -22,11 +22,6 @@ directory(paths.incrementalDir);
 
 //*** GENERAL
 
-jake.addListener("complete", function() {
-  const elapsedSeconds = (Date.now() - startTime) / 1000;
-  console.log("\n\nBUILD OK (" + elapsedSeconds.toFixed(2) + "s)");
-});
-
 desc("Show available tasks");
 task(
   "default",
@@ -41,72 +36,19 @@ task(
   { async: true }
 );
 
-desc("Start localhost server for manual testing");
-task(
-  "run",
-  ["nodeVersion", "build:all"],
-  function() {
-    const runServer = require("../application/_run_server.js");
-
-    console.log("Running server. Press Ctrl-C to stop.");
-    runServer.runInteractively();
-    // We never call complete() because we want the task to hang until the user
-    // presses 'Ctrl-C'.
-  },
-  { async: true }
-);
-
-require("./tasks/build_distribution.js");
-require("./tasks/lint.js");
-require("./tasks/test.js");
-
 desc("Delete all generated files");
 task("clean", [], function() {
   jake.rmRf(paths.generatedDir);
 });
 
-desc("Start Karma server for testing");
-task(
-  "karma",
-  ["versions"],
-  function() {
-    karmaRunner().start(
-      {
-        configFile: paths.karmaConfig
-      },
-      complete,
-      fail
-    );
-  },
-  { async: true }
-);
+require("./tasks/build_distribution.js");
+require("./tasks/karma.js");
+require("./tasks/lint.js");
+require("./tasks/run.js");
+require("./tasks/test.js");
+require("./tasks/version_check.js");
 
-desc("Check dependency versions");
-task("versions", ["nodeVersion"]);
-
-task(
-  "nodeVersion",
-  [],
-  function() {
-    console.log("Checking Node.js version: .");
-    const version = require("./version_checker.js");
-
-    version.check(
-      {
-        name: "Node",
-        expected: require("../../package.json").engines.node,
-        actual: process.version,
-        strict: strict
-      },
-      complete,
-      fail
-    );
-  },
-  { async: true }
-);
-
-//*** LAZY-LOADED MODULES
-
-function karmaRunner() {
-  return require("simplebuild-karma");
-}
+jake.addListener("complete", function() {
+  const elapsedSeconds = (Date.now() - startTime) / 1000;
+  console.log(`BUILD OK (${elapsedSeconds.toFixed(2)}s)`);
+});

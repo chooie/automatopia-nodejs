@@ -147,7 +147,7 @@ function mochaConfig() {
 }
 
 function mochaRunner() {
-  return require("../mocha_runner.js");
+  return require("./utils//mocha_runner.js");
 }
 
 function testedBrowsers() {
