@@ -54,6 +54,14 @@ With this in place, make sure to start the karma server and capture each of
 the browsers you would like to test by visiting http://localhost:9876 (may
 differ if you are in an emulator - read the docs for that environment).
 
+## Gotchas
+When limiting the mocha tests that you want to run with `.skip()` or `.only()`,
+make sure to use the `test:quick` task first to get a passing suite (WITH NO
+LIMITS SPECIFIED YET). Then limit your tests and run `test:quick` again.
+
+There is something weird going on with our jake test tasks, mocha, and/or karma
+that is stopping this from working properly (like with `test:all`).
+
 ## Credits
   Much of the inspiration and implementation is borrowed from James Shore
   (https://github.com/jamesshore). I highly recommend his webseries Let's Code
