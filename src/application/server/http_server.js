@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const util = require("util");
 
-exports.make = function make(contentDir, notFoundPageToServe) {
+exports.make = function make(portNumber, contentDir, notFoundPageToServe) {
   const httpServer = express();
 
   httpServer.set("views", "src/application/server/views");
@@ -19,7 +19,7 @@ exports.make = function make(contentDir, notFoundPageToServe) {
   });
 
   return {
-    start(portNumber) {
+    start() {
       const listenFn = httpServer.listen.bind(httpServer);
       const listenPromise = util.promisify(listenFn);
       return listenPromise(portNumber);

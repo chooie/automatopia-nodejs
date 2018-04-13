@@ -1,20 +1,22 @@
 const httpServer = require("./http_server.js");
 
 exports.make = function server() {
+  let server;
+
   return {
-    async start(contentDir, notFoundPageToServe, portNumber) {
+    async start(portNumber, contentDir, notFoundPageToServe) {
       if (!portNumber) throw new Error("port number is required");
 
-      this._httpServer = httpServer.make(contentDir, notFoundPageToServe);
-      await this._httpServer.start(portNumber);
+      server = httpServer.make(portNumber, contentDir, notFoundPageToServe);
+      await server.start(portNumber);
     },
 
     async stop() {
-      if (this._httpServer === undefined) {
+      if (server === undefined) {
         throw new Error("stop() called before server started");
       }
 
-      await this._httpServer.stop();
+      await server.stop();
     }
   };
 };
