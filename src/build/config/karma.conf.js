@@ -16,7 +16,7 @@ module.exports = function(config) {
         included: false
       },
       { pattern: "src/application/client/content/screen.css", included: false },
-      { pattern: "src/application/client/content/index.html", included: false }
+      { pattern: "src/application/client/content/**/*.pug", included: false }
     ],
 
     // list of files to exclude
@@ -31,8 +31,9 @@ module.exports = function(config) {
       "src/application/node_modules/vendor/proclaim-2.0.0.js": ["commonjs"],
       "src/application/client/content/*.js": ["commonjs"],
       "src/application/client/ui/*.js": ["commonjs"],
-      "src/application/client/content/vendor/quixote-0.9.0.js": ["commonjs"],
-      "src/application/shared/**/*.js": ["commonjs"]
+      "src/application/client/content/vendor/quixote-0.14.0.js": ["commonjs"],
+      "src/application/shared/**/*.js": ["commonjs"],
+      "src/application/client/content/**/*.pug": ["pug"]
     },
 
     // test results reporter to use
@@ -48,7 +49,7 @@ module.exports = function(config) {
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR ||
     // config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
     // enable / disable watching file and executing tests whenever any file
     // changes

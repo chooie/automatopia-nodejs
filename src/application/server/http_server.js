@@ -6,7 +6,7 @@ const util = require("util");
 exports.make = function make(portNumber, contentDir, notFoundPageToServe) {
   const httpServer = express();
 
-  httpServer.set("views", "src/application/server/views");
+  httpServer.set("views", "src/application/client/content");
   httpServer.set("view engine", "pug");
 
   httpServer.get("/", function(req, res) {
