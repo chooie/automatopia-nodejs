@@ -6,11 +6,14 @@ const util = require("util");
 exports.make = function make(contentDir, notFoundPageToServe) {
   const httpServer = express();
 
-  // httpServer.set("view engine", "pug");
+  httpServer.set("views", "src/application/server/views");
+  httpServer.set("view engine", "pug");
 
-  // httpServer.get('/', function (req, res) {
-  //   res.render('index', { title: 'Hey', message: 'EXPRESS ROUTE' });
-  // });
+  httpServer.get("/", function(req, res) {
+    res.render("index", {
+      title: "Automatopia NodeJS - Home"
+    });
+  });
 
   httpServer.use(express.static(contentDir));
   httpServer.use(function(req, res, next) {
