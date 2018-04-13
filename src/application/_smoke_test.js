@@ -79,6 +79,19 @@ describe("Smoke test", function() {
     const text = await element.getText();
     assert.equal(text, "Hello, world!");
   });
+
+  it("can get 404 page when using an unknown route", async function() {
+    const unknownRoute = "/not-a-known-route";
+    let { receivedData } = await httpGet(`${HOME_PAGE_URL}${unknownRoute}`);
+    const marker = "App 404 page";
+    const didFind404Page = receivedData.indexOf(marker) !== -1;
+
+    assert.equal(
+      didFind404Page,
+      true,
+      `404 page should have contained test marker '${marker}'`
+    );
+  });
 });
 
 function createDriver() {

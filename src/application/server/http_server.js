@@ -5,10 +5,20 @@ const util = require("util");
 
 exports.make = function make(contentDir, notFoundPageToServe) {
   const httpServer = express();
-  httpServer.use(express.static(contentDir));
 
+  // httpServer.set("view engine", "pug");
+
+  // httpServer.get('/', function (req, res) {
+  //   res.render('index', { title: 'Hey', message: 'EXPRESS ROUTE' });
+  // });
+
+  httpServer.use(express.static(contentDir));
   httpServer.use(function(req, res, next) {
-    res.status(404).sendFile(path.join(__dirname, "../../..", contentDir));
+    res
+      .status(404)
+      .sendFile(
+        path.join(__dirname, "../../..", contentDir, notFoundPageToServe)
+      );
   });
 
   return {
