@@ -20,30 +20,7 @@ namespace("build", function() {
     );
   });
 
-  task("client", ["cacheBust"]);
-
-  task(
-    "cacheBust",
-    ["collateClientFiles", "bundleClientJs"],
-    function() {
-      process.stdout.write("Cache-busting CSS and JavaScript: ");
-
-      const hashCatRunner = require("./utils/hashcat_runner.js");
-      hashCatRunner.go(
-        {
-          files: [paths.buildClientIndexHtml, paths.buildClient404Html]
-        },
-        removeUnwantedFiles,
-        fail
-      );
-
-      function removeUnwantedFiles() {
-        shell().rm(paths.buildIntermediateFilesToErase());
-        complete();
-      }
-    },
-    { async: true }
-  );
+  task("client", ["collateClientFiles", "bundleClientJs"]);
 
   task("collateClientFiles", [paths.buildClientDir], function() {
     console.log("Collating client files: .");

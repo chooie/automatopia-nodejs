@@ -4,27 +4,17 @@
     <!-- smoke test marker: App home page -->
     <title>TDD App</title>
 
-    <!-- #cat min.css -->
     <link rel="stylesheet" type="text/css" href="./vendor/normalize-3.0.2.css">
     <link rel="stylesheet" type="text/css" href="./screen.css">
-    <!-- endcat -->
-
-    <script src="vendor/jquery-1.8.3.min.js" type="text/javascript"></script>
-
-    <!-- #cat app.min.js -->
-    <script src="bundle.js" type="text/javascript"></script>
-    <!-- endcat -->
-
     <link href="nodejs-512.png" rel="shortcut icon" type="image/png"/>
   </head>
   <body>
     <h1 id="header-text">Hello, world!</h1>
 
+    <script src="bundle.js" type="text/javascript"></script>
     <script type="text/javascript">
-     $(function() {
-         const client = require("./main.js");
-         client.isTrue();
-     });
+     const client = require("./main.js");
+     console.log(client.isTrue());
     </script>
 
   </body>
