@@ -10,18 +10,12 @@ exports.make = function make(contentDir, notFoundPageToServe) {
   httpServer.set("view engine", "pug");
 
   httpServer.get("/", function(req, res) {
-    res.render("index", {
-      title: "Automatopia NodeJS - Home"
-    });
+    res.render("index", { title: "Automatopia NodeJS - Home" });
   });
 
   httpServer.use(express.static(contentDir));
   httpServer.use(function(req, res, next) {
-    res
-      .status(404)
-      .sendFile(
-        path.join(__dirname, "../../..", contentDir, notFoundPageToServe)
-      );
+    res.status(404).render("404");
   });
 
   return {
