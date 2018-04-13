@@ -1,11 +1,15 @@
-const http = require("http");
+const express = require("express");
 const fs = require("fs");
-const send = require("send");
+const path = require("path");
 const util = require("util");
 
 exports.make = function make(contentDir, notFoundPageToServe) {
-  let httpServer = http.createServer();
-  handleHttpRequests(httpServer, contentDir, notFoundPageToServe);
+  const httpServer = express();
+  httpServer.use(express.static(contentDir));
+
+  httpServer.use(function(req, res, next) {
+    res.status(404).sendFile(path.join(__dirname, "../../..", contentDir));
+  });
 
   return {
     start(portNumber) {
@@ -20,33 +24,8 @@ exports.make = function make(contentDir, notFoundPageToServe) {
       return closePromise();
     },
 
-    getNodeServer() {
+    getHttpServer() {
       return httpServer;
     }
   };
 };
-
-function handleHttpRequests(httpServer, contentDir, notFoundPageToServe) {
-  httpServer.on("request", function(request, response) {
-    send(request, request.url, { root: contentDir })
-      .on("error", handleError)
-      .pipe(response);
-
-    function handleError(err) {
-      if (err.status === 404) {
-        serveErrorFile(response, 404, contentDir + "/" + notFoundPageToServe);
-      } else {
-        throw err;
-      }
-    }
-  });
-}
-
-function serveErrorFile(response, statusCode, file) {
-  response.statusCode = statusCode;
-  response.setHeader("Content-Type", "text/html; charset=UTF-8");
-  fs.readFile(file, function(err, data) {
-    if (err) throw err;
-    response.end(data);
-  });
-}
