@@ -32,6 +32,10 @@ module.exports = function(config) {
       "src/application/client/content/*.js": ["commonjs"],
       "src/application/client/ui/*.js": ["commonjs"],
       "src/application/client/content/vendor/quixote-0.14.0.js": ["commonjs"],
+      "src/application/client/content/vendor/jss-9.8.1.js": ["commonjs"],
+      "src/application/client/content/vendor/jss-preset-default-4.3.0.js": [
+        "commonjs"
+      ],
       "src/application/shared/**/*.js": ["commonjs"],
       "src/application/client/content/**/*.pug": ["pug"]
     },

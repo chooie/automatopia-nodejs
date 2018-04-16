@@ -1,10 +1,12 @@
 let assert = require("_assert");
 let cssHelper = require("./_css_test_helper.js");
+const screen = require("./screen.js");
 
 describe("CSS: Home page", function() {
   let frame;
+  let styleClasses;
 
-  let headerText;
+  let greenElement;
 
   before(function(done) {
     this.timeout(10 * 1000);
@@ -12,7 +14,11 @@ describe("CSS: Home page", function() {
       src: "/base/src/application/client/content/index.html",
       width: cssHelper.smallestDeviceWidth
     };
-    frame = cssHelper.createFrame(options, done);
+    frame = cssHelper.createFrame(options, function(err, frame) {
+      if (err) throw Error(err);
+      styleClasses = screen.setupSheet(frame.body().toDomElement()).classes;
+      done();
+    });
   });
 
   after(function() {
@@ -21,6 +27,7 @@ describe("CSS: Home page", function() {
 
   beforeEach(function() {
     frame.reset();
+    greenElement = frame.get("#green-element");
   });
 
   it("has a background color", function() {
@@ -28,5 +35,11 @@ describe("CSS: Home page", function() {
       cssHelper.getBackgroundColor(frame.body()),
       "rgb(0, 191, 255)"
     );
+  });
+
+  it("works with jss", function() {
+    cssHelper.applyClass(greenElement, styleClasses.greenthing, function() {
+      assert.equal(cssHelper.getBackgroundColor(greenElement), screen.green);
+    });
   });
 });

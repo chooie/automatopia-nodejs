@@ -254,6 +254,8 @@ exports.assertActivateDepresses = function assertActivateDepresses(
   });
 };
 
+exports.applyClass = applyClass;
+
 function applyClass(element, className, fn) {
   var domElement = element.toDomElement();
   var oldClassName = domElement.className;
