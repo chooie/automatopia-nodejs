@@ -78,6 +78,7 @@ describe("Smoke test", function() {
     const element = elements[0];
     const text = await element.getText();
     assert.equal(text, "Hello, world!");
+    assert.equal(await driver.getTitle(), "Automatopia NodeJS - Home");
   });
 
   it("can get 404 page when using an unknown route", async function() {
