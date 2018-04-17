@@ -30,3 +30,12 @@ exports.setupSheet = function setupSheet(element) {
   const sheet = jss.createStyleSheet(style);
   return sheet.attach();
 };
+
+exports.getSheetText = function() {
+  jss.setup(preset());
+  const sheet = jss.createStyleSheet(style);
+  return {
+    classes: sheet.classes,
+    text: sheet.toString()
+  };
+};
