@@ -4,6 +4,7 @@ const path = require("path");
 const util = require("util");
 
 const screen = require("../shared/screen.js");
+const styleSheet = screen.getSheetClassesAndText();
 
 exports.make = function make(portNumber, contentDir, notFoundPageToServe) {
   const httpServer = express();
@@ -12,7 +13,6 @@ exports.make = function make(portNumber, contentDir, notFoundPageToServe) {
   httpServer.set("view engine", "pug");
 
   httpServer.get("/", function(req, res) {
-    const styleSheet = screen.getSheetClassesAndText();
     res.render("index", {
       title: "Home - Automatopia NodeJS",
       classes: styleSheet.classes,
@@ -22,7 +22,11 @@ exports.make = function make(portNumber, contentDir, notFoundPageToServe) {
 
   httpServer.use(express.static(contentDir));
   httpServer.use(function(req, res, next) {
-    res.status(404).render("404", { title: "Not Found - Automatopia NodeJS" });
+    res.status(404).render("404", {
+      title: "Not Found - Automatopia NodeJS",
+      classes: styleSheet.classes,
+      cssText: styleSheet.text
+    });
   });
 
   return {

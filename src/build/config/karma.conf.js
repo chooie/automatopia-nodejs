@@ -11,13 +11,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      "src/application/node_modules/**/*.js",
-      "src/application/client/**/*.js",
-      "src/application/shared/**/*.js",
-      {
-        pattern: "src/application/client/content/vendor/normalize-3.0.2.css",
-        included: false
-      },
+      // Include all non-server js files
+      "src/application/!(server)/**/*.js",
+      { pattern: "src/application/client/content/**/*.css", included: false },
       { pattern: "src/application/client/content/**/*.pug", included: false }
     ],
 
@@ -26,15 +22,7 @@ module.exports = function(config) {
 
     // preprocessors
     preprocessors: {
-      "src/application/node_modules/*.js": ["commonjs"],
-      "src/application/node_modules/vendor/big-object-diff-0.7.0.js": [
-        "commonjs"
-      ],
-      "src/application/node_modules/vendor/proclaim-2.0.0.js": ["commonjs"],
-      "src/application/client/content/*.js": ["commonjs"],
-      "src/application/client/ui/*.js": ["commonjs"],
-      "src/application/client/content/vendor/quixote-0.14.0.js": ["commonjs"],
-      "src/application/shared/**/*.js": ["commonjs"],
+      "src/application/**/*.js": ["commonjs"],
       "src/application/client/content/**/*.pug": ["pug"]
     },
 

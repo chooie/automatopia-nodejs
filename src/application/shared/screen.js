@@ -1,5 +1,5 @@
-const jss = require("./vendor/jss-9.8.1.js").default;
-const preset = require("./vendor/jss-preset-default-4.3.0.js").default;
+const jss = require("./vendor/jss-9.8.1.min.js").default;
+const preset = require("./vendor/jss-preset-default-4.3.0.min.js").default;
 
 const green = "rgb(0, 128, 0)";
 const blue = "rgb(0, 191, 255)";

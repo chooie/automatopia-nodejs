@@ -3,10 +3,10 @@ html
   head
     title= title
     link(rel="stylesheet" type="text/css" href="./vendor/normalize-3.0.2.css")
-    link(rel="stylesheet" type="text/css" href="./screen.css")
+    style(type="text/css")=cssText
     link(rel="shortcut icon" type="image/png" href="./nodejs-512.png")
 
-  body
+  body(class=classes.container)
     h1 404: Page Not Found :(
     a(
       href="/"
