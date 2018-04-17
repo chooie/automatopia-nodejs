@@ -1,6 +1,6 @@
 let assert = require("_assert");
 let cssHelper = require("./_css_test_helper.js");
-const screen = require("./screen.js");
+const screen = require("../../shared/screen.js");
 
 describe("CSS: Home page", function() {
   let frame;
@@ -33,13 +33,16 @@ describe("CSS: Home page", function() {
   it("has a background color", function() {
     assert.equal(
       cssHelper.getBackgroundColor(frame.body()),
-      "rgb(0, 191, 255)"
+      screen.colors.blue
     );
   });
 
   it("works with jss", function() {
     cssHelper.applyClass(greenElement, styleClasses.greenthing, function() {
-      assert.equal(cssHelper.getBackgroundColor(greenElement), screen.green);
+      assert.equal(
+        cssHelper.getBackgroundColor(greenElement),
+        screen.colors.green
+      );
     });
   });
 });
