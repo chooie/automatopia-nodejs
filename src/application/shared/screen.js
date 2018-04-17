@@ -5,8 +5,7 @@ const green = "rgb(0, 128, 0)";
 const blue = "rgb(0, 191, 255)";
 
 exports.colors = {
-  blue,
-  green
+  blue
 };
 
 const style = {
@@ -15,9 +14,6 @@ const style = {
     padding: 0,
     marginBottom: "13px",
     background: blue
-  },
-  greenthing: {
-    background: green
   }
 };
 
@@ -31,7 +27,7 @@ exports.setupSheet = function setupSheet(element) {
   return sheet.attach();
 };
 
-exports.getSheetText = function() {
+exports.getSheetClassesAndText = function() {
   jss.setup(preset());
   const sheet = jss.createStyleSheet(style);
   return {

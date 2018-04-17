@@ -11,8 +11,7 @@ exports.setupUnitTests = function setupUnitTests() {
       {
         width: exports.smallestDeviceWidth,
         stylesheet: [
-          "/base/src/application/client/content/vendor/normalize-3.0.2.css",
-          "/base/src/application/client/content/screen.css"
+          "/base/src/application/client/content/vendor/normalize-3.0.2.css"
         ]
       },
       done

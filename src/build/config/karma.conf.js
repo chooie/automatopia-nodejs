@@ -1,3 +1,6 @@
+const screen = require("../../application/shared/screen.js");
+const styleSheet = screen.getSheetClassesAndText();
+
 module.exports = function(config) {
   config.set({
     // base path, that will be used to resolve files and exclude
@@ -15,7 +18,6 @@ module.exports = function(config) {
         pattern: "src/application/client/content/vendor/normalize-3.0.2.css",
         included: false
       },
-      { pattern: "src/application/client/content/screen.css", included: false },
       { pattern: "src/application/client/content/**/*.pug", included: false }
     ],
 
@@ -34,6 +36,12 @@ module.exports = function(config) {
       "src/application/client/content/vendor/quixote-0.14.0.js": ["commonjs"],
       "src/application/shared/**/*.js": ["commonjs"],
       "src/application/client/content/**/*.pug": ["pug"]
+    },
+
+    // We need to inject our jss classes and text into pug
+    pugPreprocessor: {
+      classes: styleSheet.classes,
+      cssText: styleSheet.text
     },
 
     // test results reporter to use

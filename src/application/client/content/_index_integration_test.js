@@ -6,8 +6,6 @@ describe("CSS: Home page", function() {
   let frame;
   let styleClasses;
 
-  let greenElement;
-
   before(function(done) {
     this.timeout(10 * 1000);
     var options = {
@@ -27,7 +25,6 @@ describe("CSS: Home page", function() {
 
   beforeEach(function() {
     frame.reset();
-    greenElement = frame.get("#green-element");
   });
 
   it("has a background color", function() {
@@ -35,14 +32,5 @@ describe("CSS: Home page", function() {
       cssHelper.getBackgroundColor(frame.body()),
       screen.colors.blue
     );
-  });
-
-  it("works with jss", function() {
-    cssHelper.applyClass(greenElement, styleClasses.greenthing, function() {
-      assert.equal(
-        cssHelper.getBackgroundColor(greenElement),
-        screen.colors.green
-      );
-    });
   });
 });

@@ -3,6 +3,8 @@ const fs = require("fs");
 const path = require("path");
 const util = require("util");
 
+const screen = require("../shared/screen.js");
+
 exports.make = function make(portNumber, contentDir, notFoundPageToServe) {
   const httpServer = express();
 
@@ -10,7 +12,12 @@ exports.make = function make(portNumber, contentDir, notFoundPageToServe) {
   httpServer.set("view engine", "pug");
 
   httpServer.get("/", function(req, res) {
-    res.render("index", { title: "Home - Automatopia NodeJS" });
+    const styleSheet = screen.getSheetClassesAndText();
+    res.render("index", {
+      title: "Home - Automatopia NodeJS",
+      classes: styleSheet.classes,
+      cssText: styleSheet.text
+    });
   });
 
   httpServer.use(express.static(contentDir));
