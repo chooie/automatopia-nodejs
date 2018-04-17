@@ -1,10 +1,9 @@
 let assert = require("_assert");
 let cssHelper = require("./_css_test_helper.js");
-const screen = require("../../shared/screen.js");
+const colors = require("../../shared/colors.js");
 
 describe("CSS: Home page", function() {
   let frame;
-  let styleClasses;
 
   before(function(done) {
     this.timeout(10 * 1000);
@@ -14,7 +13,6 @@ describe("CSS: Home page", function() {
     };
     frame = cssHelper.createFrame(options, function(err, frame) {
       if (err) throw Error(err);
-      styleClasses = screen.setupSheet(frame.body().toDomElement()).classes;
       done();
     });
   });
@@ -28,9 +26,6 @@ describe("CSS: Home page", function() {
   });
 
   it("has a background color", function() {
-    assert.equal(
-      cssHelper.getBackgroundColor(frame.body()),
-      screen.colors.blue
-    );
+    assert.equal(cssHelper.getBackgroundColor(frame.body()), colors.blue);
   });
 });

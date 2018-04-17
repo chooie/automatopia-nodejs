@@ -1,19 +1,13 @@
 const jss = require("./vendor/jss-9.8.1.min.js").default;
 const preset = require("./vendor/jss-preset-default-4.3.0.min.js").default;
-
-const green = "rgb(0, 128, 0)";
-const blue = "rgb(0, 191, 255)";
-
-exports.colors = {
-  blue
-};
+const colors = require("./colors.js");
 
 const style = {
   container: {
     margin: 0,
     padding: 0,
     marginBottom: "13px",
-    background: blue
+    background: colors.blue
   }
 };
 

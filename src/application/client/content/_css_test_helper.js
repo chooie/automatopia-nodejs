@@ -1,5 +1,6 @@
-var quixote = require("./vendor/quixote-0.14.0.js");
-var assert = require("_assert");
+const quixote = require("./vendor/quixote-0.14.0.js");
+const assert = require("_assert");
+const screen = require("../../shared/screen.js");
 
 exports.smallestDeviceWidth = 320;
 exports.mediumDeviceWidth = 640;
@@ -14,7 +15,12 @@ exports.setupUnitTests = function setupUnitTests() {
           "/base/src/application/client/content/vendor/normalize-3.0.2.css"
         ]
       },
-      done
+      function() {
+        exports.frame.styleClasses = screen.setupSheet(
+          exports.frame.body().toDomElement()
+        ).classes;
+        done();
+      }
     );
   });
 
