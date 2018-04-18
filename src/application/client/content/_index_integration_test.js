@@ -1,6 +1,6 @@
 const assert = require("_assert");
 const cssHelper = require("./_css_test_helper.js");
-const colors = require("./colors.js");
+const colors = require("../../shared/colors.js");
 const config = require("../../shared/config.js");
 
 describe("CSS: Home page", function() {

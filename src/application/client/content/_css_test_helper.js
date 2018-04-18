@@ -3,7 +3,7 @@ const assert = require("_assert");
 
 const config = require("../../shared/config.js");
 const screen = require("../../shared/screen.js");
-const mainStyle = require("./main_style.js");
+const mainStyle = require("../../shared/main_style.js");
 
 exports.smallestDeviceWidth = 320;
 exports.mediumDeviceWidth = 640;

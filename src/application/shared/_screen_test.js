@@ -1,6 +1,6 @@
 const assert = require("_assert");
 const screen = require("./screen.js");
-const mainStyle = require("../client/content/main_style.js");
+const mainStyle = require("./main_style.js");
 
 describe("SHARED: Screen", function() {
   it("has classes", function() {

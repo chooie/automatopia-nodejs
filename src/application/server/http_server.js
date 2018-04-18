@@ -5,7 +5,8 @@ const util = require("util");
 
 const config = require("../shared/config.js");
 const screen = require("../shared/screen.js");
-const styleSheet = screen.getSheetClassesAndText();
+const styles = require("../shared/main_style.js");
+const styleSheet = screen.getSheetClassesAndText(styles);
 
 exports.make = function make(portNumber, contentDir, notFoundPageToServe) {
   const httpServer = express();

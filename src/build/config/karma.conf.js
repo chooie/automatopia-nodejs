@@ -1,5 +1,6 @@
 const screen = require("../../application/shared/screen.js");
-const styleSheet = screen.getSheetClassesAndText();
+const styles = require("../../application/shared/main_style.js");
+const styleSheet = screen.getSheetClassesAndText(styles);
 
 module.exports = function(config) {
   config.set({
