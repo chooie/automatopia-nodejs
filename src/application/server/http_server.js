@@ -3,13 +3,14 @@ const fs = require("fs");
 const path = require("path");
 const util = require("util");
 
+const config = require("../shared/config.js");
 const screen = require("../shared/screen.js");
 const styleSheet = screen.getSheetClassesAndText();
 
 exports.make = function make(portNumber, contentDir, notFoundPageToServe) {
   const httpServer = express();
 
-  httpServer.set("views", "src/application/client/content");
+  httpServer.set("views", config.paths.viewsDirectory);
   httpServer.set("view engine", "pug");
 
   httpServer.get("/", function(req, res) {

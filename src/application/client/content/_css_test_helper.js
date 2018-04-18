@@ -1,19 +1,21 @@
 const quixote = require("./vendor/quixote-0.14.0.js");
 const assert = require("_assert");
+
+const config = require("../../shared/config.js");
 const screen = require("../../shared/screen.js");
 
 exports.smallestDeviceWidth = 320;
 exports.mediumDeviceWidth = 640;
 exports.maximumPageWidth = 800;
 
+const clientVendorDir = "src/application/client/content/vendor";
+
 exports.setupUnitTests = function setupUnitTests() {
   before(function(done) {
     exports.frame = exports.createFrame(
       {
         width: exports.smallestDeviceWidth,
-        stylesheet: [
-          "/base/src/application/client/content/vendor/normalize-3.0.2.css"
-        ]
+        stylesheet: [`/base/${clientVendorDir}/normalize-3.0.2.css`]
       },
       function() {
         exports.frame.styleClasses = screen.setupSheet(

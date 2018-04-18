@@ -1,6 +1,7 @@
-let assert = require("_assert");
-let cssHelper = require("./_css_test_helper.js");
+const assert = require("_assert");
+const cssHelper = require("./_css_test_helper.js");
 const colors = require("../../shared/colors.js");
+const config = require("../../shared/config.js");
 
 describe("CSS: Home page", function() {
   let frame;
@@ -8,7 +9,7 @@ describe("CSS: Home page", function() {
   before(function(done) {
     this.timeout(10 * 1000);
     var options = {
-      src: "/base/src/application/client/content/index.html",
+      src: `/base/${config.paths.viewsDirectory}/index.html`,
       width: cssHelper.smallestDeviceWidth
     };
     frame = cssHelper.createFrame(options, function(err, frame) {
