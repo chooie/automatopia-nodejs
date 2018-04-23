@@ -6,7 +6,7 @@ const webdriver = require("selenium-webdriver");
 
 const By = webdriver.By;
 
-const config = require("./shared/config.js").getConfig("automated testing");
+const config = require("./server/config.js").getConfig("automated testing");
 const runServer = require("./_run_server.js");
 
 const HOME_PAGE_URL = `http://localhost:${config.port}`;

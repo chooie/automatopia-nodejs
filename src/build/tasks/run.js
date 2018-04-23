@@ -1,6 +1,6 @@
 /*global desc, task, complete */
 
-let configuration = require("../../application/shared/config.js").getConfig(
+let configuration = require("../../application/server/config.js").getConfig(
   "development"
 );
 
