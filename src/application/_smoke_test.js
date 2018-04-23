@@ -10,6 +10,7 @@ const config = require("./shared/config.js").getConfig("automated testing");
 const runServer = require("./_run_server.js");
 
 const HOME_PAGE_URL = `http://localhost:${config.port}`;
+const UNKNOWN_ROUTE = `${HOME_PAGE_URL}/not-a-known-route`;
 const EXPECTED_BROWSER = "chrome";
 
 describe("Smoke test", function() {
@@ -73,17 +74,16 @@ describe("Smoke test", function() {
   });
 
   it("can find the header", async function() {
-    driver.get(HOME_PAGE_URL);
+    await driver.get(HOME_PAGE_URL);
     const elements = await driver.findElements(By.id("header-text"));
     const element = elements[0];
     const text = await element.getText();
     assert.equal(text, "Hello, world!");
-    assert.equal(await driver.getTitle(), "Automatopia NodeJS - Home");
+    assert.equal(await driver.getTitle(), "Home - Automatopia NodeJS");
   });
 
   it("can get 404 page when using an unknown route", async function() {
-    const unknownRoute = "/not-a-known-route";
-    let { receivedData } = await httpGet(`${HOME_PAGE_URL}${unknownRoute}`);
+    let { receivedData } = await httpGet(UNKNOWN_ROUTE);
     const marker = "App 404 page";
     const didFind404Page = receivedData.indexOf(marker) !== -1;
 
@@ -91,6 +91,14 @@ describe("Smoke test", function() {
       didFind404Page,
       true,
       `404 page should have contained test marker '${marker}'`
+    );
+  });
+
+  it("has correct title for 404 page", async function() {
+    await driver.get(UNKNOWN_ROUTE);
+    assert.equal(
+      await driver.getTitle(),
+      "Page Not Found - Automatopia NodeJS"
     );
   });
 });

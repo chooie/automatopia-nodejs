@@ -10,12 +10,14 @@ exports.make = function make(portNumber, contentDir, notFoundPageToServe) {
   httpServer.set("view engine", "pug");
 
   httpServer.get("/", function(req, res) {
-    res.render("index", { title: "Automatopia NodeJS - Home" });
+    res.render("index", { title: "Home - Automatopia NodeJS" });
   });
 
   httpServer.use(express.static(contentDir));
   httpServer.use(function(req, res, next) {
-    res.status(404).render("404");
+    res
+      .status(404)
+      .render("404", { title: "Page Not Found - Automatopia NodeJS" });
   });
 
   return {
