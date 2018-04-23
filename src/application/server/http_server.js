@@ -4,7 +4,7 @@ const util = require("util");
 exports.make = function make(portNumber, contentDir, notFoundPageToServe) {
   const httpServer = express();
 
-  httpServer.set("views", "src/application/client/content");
+  httpServer.set("views", "src/application/client/content/template_views");
   httpServer.set("view engine", "pug");
 
   httpServer.get("/", function(req, res) {

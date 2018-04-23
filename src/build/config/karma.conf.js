@@ -8,15 +8,17 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      "src/application/node_modules/**/*.js",
-      "src/application/client/**/*.js",
-      "src/application/shared/**/*.js",
+      // Include all files except server
+      "src/application/!(server)/**/*.js",
       {
         pattern: "src/application/client/content/vendor/normalize-3.0.2.css",
         included: false
       },
       { pattern: "src/application/client/content/screen.css", included: false },
-      { pattern: "src/application/client/content/**/*.pug", included: false }
+      {
+        pattern: "src/application/client/content/template_views/**/*.pug",
+        included: false
+      }
     ],
 
     // list of files to exclude
@@ -24,16 +26,9 @@ module.exports = function(config) {
 
     // preprocessors
     preprocessors: {
-      "src/application/node_modules/*.js": ["commonjs"],
-      "src/application/node_modules/vendor/big-object-diff-0.7.0.js": [
-        "commonjs"
-      ],
-      "src/application/node_modules/vendor/proclaim-2.0.0.js": ["commonjs"],
-      "src/application/client/content/*.js": ["commonjs"],
-      "src/application/client/ui/*.js": ["commonjs"],
-      "src/application/client/content/vendor/quixote-0.14.0.js": ["commonjs"],
-      "src/application/shared/**/*.js": ["commonjs"],
-      "src/application/client/content/**/*.pug": ["pug"]
+      // Include all files except server
+      "src/application/!(server)/**/*.js": ["commonjs"],
+      "src/application/client/content/template_views/**/*.pug": ["pug"]
     },
 
     // test results reporter to use

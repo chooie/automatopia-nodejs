@@ -7,7 +7,7 @@ describe("CSS: Home page", function() {
   before(function(done) {
     this.timeout(10 * 1000);
     var options = {
-      src: "/base/src/application/client/content/index.html",
+      src: "/base/src/application/client/content/template_views/index.html",
       width: cssHelper.smallestDeviceWidth
     };
     frame = cssHelper.createFrame(options, done);
