@@ -5,14 +5,16 @@ exports.smallestDeviceWidth = 320;
 exports.mediumDeviceWidth = 640;
 exports.maximumPageWidth = 800;
 
+const contentDir = "/base/src/application/client/content";
+
 exports.setupUnitTests = function setupUnitTests() {
   before(function(done) {
     exports.frame = exports.createFrame(
       {
         width: exports.smallestDeviceWidth,
         stylesheet: [
-          "/base/src/application/client/content/vendor/normalize-3.0.2.css",
-          "/base/src/application/client/content/screen.css"
+          `${contentDir}/styles/vendor/normalize-3.0.2.css`,
+          `${contentDir}/styles/main.css`
         ]
       },
       done

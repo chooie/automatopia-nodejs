@@ -11,12 +11,9 @@ module.exports = function(config) {
       // Include all files except server
       "src/application/!(server)/**/*.js",
       {
-        pattern: "src/application/client/content/vendor/normalize-3.0.2.css",
-        included: false
-      },
-      { pattern: "src/application/client/content/screen.css", included: false },
-      {
-        pattern: "src/application/client/content/template_views/**/*.pug",
+        // Don't automatically request in iframe any non-js files - but make
+        // them available to be served
+        pattern: "src/application/client/content/**/!(*.js)",
         included: false
       }
     ],
