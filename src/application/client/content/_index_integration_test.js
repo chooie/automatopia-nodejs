@@ -4,8 +4,6 @@ let cssHelper = require("./_css_test_helper.js");
 describe("CSS: Home page", function() {
   let frame;
 
-  let headerText;
-
   before(function(done) {
     this.timeout(10 * 1000);
     var options = {

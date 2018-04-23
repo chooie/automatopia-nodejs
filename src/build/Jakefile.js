@@ -1,4 +1,4 @@
-/*global desc, task, jake, rule, fail, complete, directory*/
+/*global desc, task, jake, directory*/
 const startTime = Date.now();
 
 // We've put most of our require statements in functions (or tasks) so we

@@ -2,8 +2,6 @@ const child_process = require("child_process");
 const fs = require("fs");
 const procfile = require("procfile");
 
-const config = require("../application/shared/config.js");
-
 exports.runInteractively = function(configuration) {
   return run(configuration, "inherit");
 };

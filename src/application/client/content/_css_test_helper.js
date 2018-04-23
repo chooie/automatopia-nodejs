@@ -269,7 +269,7 @@ function applyClass(element, className, fn) {
 }
 
 function forceReflow(domElement) {
-  var makeLintHappy = domElement.offsetHeight;
+  domElement.offsetHeight;
 }
 
 function getCompoundStyle(element, subStyle1, subStyle2, subStyle3, subStyle4) {

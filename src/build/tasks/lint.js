@@ -1,4 +1,4 @@
-/*global desc, task, rule, fail, complete, directory*/
+/*global desc, task, rule, fail, directory*/
 const paths = require("../config/paths.js");
 
 desc("Lint everything");

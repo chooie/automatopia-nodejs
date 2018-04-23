@@ -74,8 +74,10 @@ exports.options = {
     "require-await": ERROR,
 
     // "Variables"
-    // Enable this is you want to check for unused vars
-    //"no-unused-vars": ERROR,
+
+    // Only function parameters can be unused
+    "no-unused-vars": [ERROR, { args: "none" }],
+
     "no-delete-var": ERROR,
     "no-undef": ERROR,
     "no-undef-init": ERROR,

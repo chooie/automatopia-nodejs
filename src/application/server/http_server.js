@@ -1,6 +1,4 @@
 const express = require("express");
-const fs = require("fs");
-const path = require("path");
 const util = require("util");
 
 exports.make = function make(portNumber, contentDir, notFoundPageToServe) {
