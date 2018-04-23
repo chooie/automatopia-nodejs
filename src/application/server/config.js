@@ -1,5 +1,3 @@
-exports.defaultPort = 5000;
-
 exports.getConfig = function getConfig(environment) {
   const validEnvironments = ["production", "development", "automated testing"];
 

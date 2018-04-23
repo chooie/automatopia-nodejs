@@ -23,8 +23,7 @@ function runOnlyWithStdErr(configuration) {
 }
 
 function run(configuration, stdioOptions) {
-  const defaultPort = configuration.port;
-  const commandLine = parseProcFile(defaultPort);
+  const commandLine = parseProcFile(configuration.port);
   return child_process.spawn(commandLine.command, commandLine.options, {
     stdio: stdioOptions
   });
