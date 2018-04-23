@@ -1,5 +1,5 @@
 module.exports = [
-  "Chrome 65.0.3325 (Mac OS X 10.13.3)",
+  "Chrome 66.0.3359 (Mac OS X 10.13.3)",
   "Chrome Mobile 55.0.2883 (Android 7.1.1)",
   "Edge 16.16299.0 (Windows 10.0.0)",
   "Firefox 59.0.0 (Mac OS X 10.13.0)",
