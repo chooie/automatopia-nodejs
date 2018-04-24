@@ -1,5 +1,5 @@
 let assert = require("_assert");
-let cssHelper = require("./_css_test_helper.js");
+let cssHelper = require("../_css_test_helper.js");
 
 describe("CSS: Home page", function() {
   let frame;
