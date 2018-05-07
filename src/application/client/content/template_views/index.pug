@@ -1,11 +1,15 @@
-html
-  head
-    // smoke test marker: App home page
-    include includes/defaultHeadAttributes.pug
-  body
-    h1#header-text Hello, world!
+<html>
+<head>
+  // smoke test marker: App home page
+  include includes/defaultHeadAttributes.pug
+</head>
+<body>
+ <h1 id="header-text">Hello, world!</h1>
 
-    script(src="bundle.js")
-    script.
-      const client = require("./main.js");
-      console.log(client.isTrue());
+ <script src="bundle.js"></script>
+ <script>
+ | const client = require("./main.js");
+ | console.log(client.isTrue());
+ </script>
+</body>
+</html>
