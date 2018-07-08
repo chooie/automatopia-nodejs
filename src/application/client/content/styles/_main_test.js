@@ -1,5 +1,5 @@
 const assert = require("_assert");
-const cssHelper = require("./_css_test_helper.js");
+const cssHelper = require("../_css_test_helper.js");
 
 describe("CSS: Layout", function() {
   cssHelper.setupUnitTests();
