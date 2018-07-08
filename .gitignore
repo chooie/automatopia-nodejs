@@ -7,6 +7,9 @@
 # Emacs
 .\#*
 
+# Temporary files
+*.temp
+
 # npm
 node_modules/**/.bin/
 
