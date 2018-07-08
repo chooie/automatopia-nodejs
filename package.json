@@ -6,7 +6,7 @@
   "scripts": {
     "heroku-prebuild": "./tasks.sh build:all",
     "pretty": "prettier --write \"src/**/*.js\"",
-    "precommit": "lint-staged && ./tasks.sh test:all"
+    "precommit": "lint-staged && ./tasks.sh test:all loose=true"
   },
   "lint-staged": {
     "*.{js,css}": [
