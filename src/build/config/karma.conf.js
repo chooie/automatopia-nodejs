@@ -24,8 +24,7 @@ module.exports = function(config) {
     // preprocessors
     preprocessors: {
       // Include all files except server
-      "src/application/!(server)/**/*.js": ["commonjs"],
-      "src/application/client/content/template_views/**/*.pug": ["pug"]
+      "src/application/!(server)/**/*.js": ["commonjs"]
     },
 
     // test results reporter to use
