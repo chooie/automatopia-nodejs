@@ -1,34 +1,23 @@
 var quixote = require("./vendor/quixote-0.14.0.js");
 var assert = require("_assert");
 
+exports.White = "rgb(255, 255, 255)";
+exports.OffWhite = "rgb(43, 43, 43)";
+exports.OffBlack = "rgb(253, 253, 253)";
+exports.Gold = "rgb(205, 173, 0)";
+exports.LightGrey = "rgb(167, 167, 167)";
+
+exports.backgroundColor = exports.White;
+exports.contactMailColor = exports.Gold;
+exports.catchyTextColor = exports.LightGrey;
+exports.headerTextColor = exports.OffBlack;
+exports.pageBackgroundColor = exports.OffWhite;
+
+exports.IOS_BROWSER_WIDTH = 980;
+exports.IPAD_LANDSCAPE_HEIGHT_WITH_BROWSER_TABS = 641;
 exports.smallestDeviceWidth = 320;
 exports.mediumDeviceWidth = 640;
 exports.maximumPageWidth = 800;
-
-const contentDir = "/base/src/application/client/content";
-
-exports.setupUnitTests = function setupUnitTests() {
-  before(function(done) {
-    exports.frame = exports.createFrame(
-      {
-        width: exports.smallestDeviceWidth,
-        stylesheet: [
-          `${contentDir}/styles/vendor/normalize-3.0.2.css`,
-          `${contentDir}/styles/main.css`
-        ]
-      },
-      done
-    );
-  });
-
-  beforeEach(function() {
-    exports.frame.reset();
-  });
-
-  after(function() {
-    exports.frame.remove();
-  });
-};
 
 exports.createFrame = function createFrame(options, callback) {
   return quixote.createFrame(options, callback);
@@ -65,6 +54,20 @@ exports.fontSize = function fontSize(element) {
   return element.getRawStyle("font-size");
 };
 
+exports.fontSizeByDecimalPlaces = function fontSizeByDecimalPlaces(
+  element,
+  decimalPlaces
+) {
+  const fontSize = exports.fontSize(element);
+  const fontSizeValue = exports.pixelsFloatValue(fontSize);
+  return fontSizeValue.toFixed(decimalPlaces) + "px";
+};
+
+exports.pixelsFloatValue = function pixelsFloatValue(pixels) {
+  const pixelsLessPx = pixels.replace("px", "");
+  return Number.parseFloat(pixelsLessPx);
+};
+
 exports.textColor = function textColor(element) {
   return normalizeColorString(element.getRawStyle("color"));
 };
@@ -97,6 +100,24 @@ exports.padding = function padding(element) {
     "padding-bottom",
     "padding-left"
   );
+};
+
+exports.getPaddingWidthValue = function getPaddingWidthValue(body) {
+  const leftPadding = body.getRawStyle("padding-left");
+  const leftPaddingValue = exports.pixelsFloatValue(leftPadding);
+  const rightPadding = body.getRawStyle("padding-right");
+  const rightPaddingValue = exports.pixelsFloatValue(rightPadding);
+  const paddingWidth = leftPaddingValue + rightPaddingValue;
+  return paddingWidth;
+};
+
+exports.getPaddingHeightValue = function getPaddingHeightValue(body) {
+  const topPadding = body.getRawStyle("padding-top");
+  const topPaddingValue = exports.pixelsFloatValue(topPadding);
+  const bottomPadding = body.getRawStyle("padding-bottom");
+  const bottomPaddingValue = exports.pixelsFloatValue(bottomPadding);
+  const paddingHeight = topPaddingValue + bottomPaddingValue;
+  return paddingHeight;
 };
 
 exports.under = function under(element, relativeToElement) {
@@ -179,8 +200,16 @@ exports.hasBorder = function hasBorder(element) {
 };
 
 exports.isTextVerticallyCentered = function isTextVerticallyCentered(element) {
-  var elementHeight = Math.round(element.getRawPosition().height);
+  const elementHeight = Math.round(element.getRawPosition().height);
   return elementHeight + "px" === exports.lineHeight(element);
+};
+
+exports.containerIsHorizontallyCentered = function containerIsHorizontallyCentered(
+  element
+) {
+  const left = element.getRawStyle("left");
+  const right = element.getRawStyle("right");
+  return left === "auto" && right === "auto";
 };
 
 exports.lineHeight = function lineHeight(element) {
@@ -271,7 +300,7 @@ function applyClass(element, className, fn) {
 }
 
 function forceReflow(domElement) {
-  domElement.offsetHeight;
+  return domElement.offsetHeight;
 }
 
 function getCompoundStyle(element, subStyle1, subStyle2, subStyle3, subStyle4) {

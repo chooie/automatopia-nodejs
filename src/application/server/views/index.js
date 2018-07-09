@@ -11,7 +11,11 @@ exports.page = function(options) {
     ],
     [
       "body",
-      ["h1", { id: "header-text" }, "Hello, world!"],
+      [
+        "div",
+        { id: "page-container", class: "page-container page-container--light" },
+        ["h1", { id: "header", class: "header" }, "Automatopia NodeJS"]
+      ],
       ["script", { src: "bundle.js" }],
       [
         "script",

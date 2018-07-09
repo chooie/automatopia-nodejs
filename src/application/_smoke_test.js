@@ -75,10 +75,10 @@ describe("Smoke test", function() {
 
   it("can find the header", async function() {
     await driver.get(HOME_PAGE_URL);
-    const elements = await driver.findElements(By.id("header-text"));
+    const elements = await driver.findElements(By.id("header"));
     const element = elements[0];
     const text = await element.getText();
-    assert.equal(text, "Hello, world!");
+    assert.equal(text, "Automatopia NodeJS");
     assert.equal(await driver.getTitle(), "Home - Automatopia NodeJS");
   });
 

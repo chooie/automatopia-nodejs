@@ -9,6 +9,18 @@ exports.page = function(options) {
       ["title", "Page Not Found - Automatopia NodeJS"],
       ...head.make()
     ],
-    ["body", ["h1", "404: Page Not Found :("], ["a", { href: "/" }, "Go Home"]]
+    [
+      "body",
+      [
+        "div",
+        { id: "page-container", class: "page-container page-container--light" },
+        ["h1", { id: "header", class: "header" }, "Page Not Found"],
+        [
+          "div",
+          { id: "contact-link-container", class: "container--contact-link" },
+          ["a", { class: "contact-link", href: "/" }, "Go Home"]
+        ]
+      ]
+    ]
   ];
 };
