@@ -15,7 +15,7 @@ exports.make = function make() {
     ["link", { rel: "stylesheet", type: "text/css", href: "styles/main.css" }],
     [
       "link",
-      { rel: "shortcut icon", type: "image/png", href: "favicon-256.png" }
+      { rel: "shortcut icon", type: "image/png", href: "nodejs-512.png" }
     ]
   ];
 };
