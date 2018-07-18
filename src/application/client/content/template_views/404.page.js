@@ -18,7 +18,11 @@ exports.page = function(options) {
         [
           "div",
           { id: "contact-link-container", class: "container--contact-link" },
-          ["a", { class: "contact-link", href: "/" }, "Go Home"]
+          [
+            "a",
+            { id: "contact-link", class: "contact-link", href: "/" },
+            "Go Home"
+          ]
         ]
       ]
     ]

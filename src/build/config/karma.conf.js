@@ -9,11 +9,11 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // Include all files except server
-      "src/application/!(server)/**/*.js",
+      "src/application/!(server)/**/!(*.page).js",
       {
         // Don't automatically request in iframe any non-js files - but make
         // them available to be served
-        pattern: "src/application/client/content/**/!(*.js)",
+        pattern: "src/application/client/content/**/!(!(*.page)*.js)",
         included: false
       }
     ],
@@ -24,7 +24,8 @@ module.exports = function(config) {
     // preprocessors
     preprocessors: {
       // Include all files except server
-      "src/application/!(server)/**/*.js": ["commonjs"]
+      "src/application/!(server)/**/!(*.page).js": ["commonjs"],
+      "src/application/client/content/**/*.page.js": ["js_to_html"]
     },
 
     // test results reporter to use
