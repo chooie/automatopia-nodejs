@@ -4,18 +4,17 @@ const util = require("util");
 exports.make = function make(portNumber, contentDir, notFoundPageToServe) {
   const httpServer = express();
 
-  httpServer.set("views", "src/application/client/content/template_views");
-  httpServer.set("view engine", "pug");
+  httpServer.set("views", "src/application/server/views/");
+  httpServer.engine(".js", require("@chooie/js_to_html").__express);
+  httpServer.set("view engine", "js");
 
   httpServer.get("/", function(req, res) {
-    res.render("index", { title: "Home - Automatopia NodeJS" });
+    res.render("index");
   });
 
   httpServer.use(express.static(contentDir));
   httpServer.use(function(req, res, next) {
-    res
-      .status(404)
-      .render("404", { title: "Page Not Found - Automatopia NodeJS" });
+    res.status(404).render("404");
   });
 
   return {

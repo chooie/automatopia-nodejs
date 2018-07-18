@@ -1,34 +1,23 @@
-var quixote = require("./vendor/quixote-0.14.0.js");
-var assert = require("_assert");
+const quixote = require("./vendor/quixote-0.14.0.js");
+const assert = require("_assert");
 
+exports.White = "rgb(255, 255, 255)";
+exports.OffWhite = "rgb(43, 43, 43)";
+exports.OffBlack = "rgb(253, 253, 253)";
+exports.Gold = "rgb(205, 173, 0)";
+exports.LightGrey = "rgb(167, 167, 167)";
+
+exports.backgroundColor = exports.White;
+exports.contactMailColor = exports.Gold;
+exports.catchyTextColor = exports.LightGrey;
+exports.headerTextColor = exports.OffBlack;
+exports.pageBackgroundColor = exports.OffWhite;
+
+exports.IOS_BROWSER_WIDTH = 980;
+exports.IPAD_LANDSCAPE_HEIGHT_WITH_BROWSER_TABS = 641;
 exports.smallestDeviceWidth = 320;
 exports.mediumDeviceWidth = 640;
 exports.maximumPageWidth = 800;
-
-const contentDir = "/base/src/application/client/content";
-
-exports.setupUnitTests = function setupUnitTests() {
-  before(function(done) {
-    exports.frame = exports.createFrame(
-      {
-        width: exports.smallestDeviceWidth,
-        stylesheet: [
-          `${contentDir}/styles/vendor/normalize-3.0.2.css`,
-          `${contentDir}/styles/main.css`
-        ]
-      },
-      done
-    );
-  });
-
-  beforeEach(function() {
-    exports.frame.reset();
-  });
-
-  after(function() {
-    exports.frame.remove();
-  });
-};
 
 exports.createFrame = function createFrame(options, callback) {
   return quixote.createFrame(options, callback);
@@ -39,11 +28,11 @@ exports.getBackgroundColor = function backgroundColor(element) {
 };
 
 exports.fontFamily = function fontFamily(element) {
-  var family = element.getRawStyle("font-family");
+  let family = element.getRawStyle("font-family");
   family = family.replace(/"/g, "");
 
-  var fonts = family.split(",");
-  for (var i = 0; i < fonts.length; i++) {
+  const fonts = family.split(",");
+  for (let i = 0; i < fonts.length; i++) {
     fonts[i] = trim(fonts[i]);
   }
 
@@ -55,7 +44,7 @@ exports.textAlign = function textAlign(element) {
 };
 
 exports.fontWeight = function fontWeight(element) {
-  var weight = element.getRawStyle("font-weight");
+  let weight = element.getRawStyle("font-weight");
   if (weight === "normal") weight = "400";
   return weight.toString();
 };
@@ -63,6 +52,20 @@ exports.fontWeight = function fontWeight(element) {
 exports.fontSize = function fontSize(element) {
   forceBrowserReflow(element.toDomElement());
   return element.getRawStyle("font-size");
+};
+
+exports.fontSizeByDecimalPlaces = function fontSizeByDecimalPlaces(
+  element,
+  decimalPlaces
+) {
+  const fontSize = exports.fontSize(element);
+  const fontSizeValue = exports.pixelsFloatValue(fontSize);
+  return fontSizeValue.toFixed(decimalPlaces) + "px";
+};
+
+exports.pixelsFloatValue = function pixelsFloatValue(pixels) {
+  const pixelsLessPx = pixels.replace("px", "");
+  return Number.parseFloat(pixelsLessPx);
 };
 
 exports.textColor = function textColor(element) {
@@ -99,9 +102,27 @@ exports.padding = function padding(element) {
   );
 };
 
+exports.getPaddingWidthValue = function getPaddingWidthValue(body) {
+  const leftPadding = body.getRawStyle("padding-left");
+  const leftPaddingValue = exports.pixelsFloatValue(leftPadding);
+  const rightPadding = body.getRawStyle("padding-right");
+  const rightPaddingValue = exports.pixelsFloatValue(rightPadding);
+  const paddingWidth = leftPaddingValue + rightPaddingValue;
+  return paddingWidth;
+};
+
+exports.getPaddingHeightValue = function getPaddingHeightValue(body) {
+  const topPadding = body.getRawStyle("padding-top");
+  const topPaddingValue = exports.pixelsFloatValue(topPadding);
+  const bottomPadding = body.getRawStyle("padding-bottom");
+  const bottomPaddingValue = exports.pixelsFloatValue(bottomPadding);
+  const paddingHeight = topPaddingValue + bottomPaddingValue;
+  return paddingHeight;
+};
+
 exports.under = function under(element, relativeToElement) {
-  var elementZ = getZIndex(element);
-  var relativeZ = getZIndex(relativeToElement);
+  const elementZ = getZIndex(element);
+  const relativeZ = getZIndex(relativeToElement);
 
   if (elementZ === relativeZ) {
     return !isElementAfterElementInDomTree();
@@ -110,19 +131,19 @@ exports.under = function under(element, relativeToElement) {
   }
 
   function getZIndex(element) {
-    var z = element.getRawStyle("z-index");
+    let z = element.getRawStyle("z-index");
     if (z === "auto") z = 0;
     return z;
   }
 
   function isElementAfterElementInDomTree() {
-    var elementNode = element.toDomElement();
-    var relativeNode = relativeToElement.toDomElement();
+    const elementNode = element.toDomElement();
+    const relativeNode = relativeToElement.toDomElement();
 
-    var foundRelative = false;
-    var elementAfterRelative = false;
+    let foundRelative = false;
+    let elementAfterRelative = false;
     for (
-      var child = elementNode.parentNode.firstChild;
+      let child = elementNode.parentNode.firstChild;
       child !== null;
       child = child.nextSibling
     ) {
@@ -142,21 +163,21 @@ exports.under = function under(element, relativeToElement) {
 };
 
 exports.backgroundImage = function backgroundImage(element) {
-  var url = element.getRawStyle("background-image");
+  const url = element.getRawStyle("background-image");
 
-  var parsedUrl = stripOffDomain(url);
+  const parsedUrl = stripOffDomain(url);
   if (parsedUrl === null) throw new Error("could not parse URL: " + url);
 
   return parsedUrl[2];
 
   function stripOffDomain(url) {
-    var parsedUrl = url.match(/^url\("?http:\/\/(.+?)(\/.*?)"?\)$/);
+    const parsedUrl = url.match(/^url\("?http:\/\/(.+?)(\/.*?)"?\)$/);
     return parsedUrl;
   }
 };
 
 exports.backgroundPosition = function backgroundImage(element) {
-  var position = element.getRawStyle("background-position");
+  const position = element.getRawStyle("background-position");
 
   if (position === "" || position === "50%" || position === "50% 50%") {
     return "center";
@@ -166,10 +187,10 @@ exports.backgroundPosition = function backgroundImage(element) {
 };
 
 exports.hasBorder = function hasBorder(element) {
-  var top = element.getRawStyle("border-top-style");
-  var right = element.getRawStyle("border-right-style");
-  var bottom = element.getRawStyle("border-bottom-style");
-  var left = element.getRawStyle("border-left-style");
+  const top = element.getRawStyle("border-top-style");
+  const right = element.getRawStyle("border-right-style");
+  const bottom = element.getRawStyle("border-bottom-style");
+  const left = element.getRawStyle("border-left-style");
   return !(
     top === "none" &&
     right === "none" &&
@@ -179,8 +200,16 @@ exports.hasBorder = function hasBorder(element) {
 };
 
 exports.isTextVerticallyCentered = function isTextVerticallyCentered(element) {
-  var elementHeight = Math.round(element.getRawPosition().height);
+  const elementHeight = Math.round(element.getRawPosition().height);
   return elementHeight + "px" === exports.lineHeight(element);
+};
+
+exports.containerIsHorizontallyCentered = function containerIsHorizontallyCentered(
+  element
+) {
+  const left = element.getRawStyle("left");
+  const right = element.getRawStyle("right");
+  return left === "auto" && right === "auto";
 };
 
 exports.lineHeight = function lineHeight(element) {
@@ -188,7 +217,7 @@ exports.lineHeight = function lineHeight(element) {
 };
 
 exports.dropShadow = function dropShadow(element) {
-  var shadow = element.getRawStyle("box-shadow");
+  const shadow = element.getRawStyle("box-shadow");
 
   // When there is no drop shadow, most browsers say 'none', but IE 9 gives a
   // color and nothing else. We handle that case here.
@@ -200,7 +229,7 @@ exports.dropShadow = function dropShadow(element) {
   // BTW, we don't support multiple shadows yet
 
   // get everything before the '#' and the r, g, b
-  var groups = shadow.match(/^([^#]+) (#......)/);
+  const groups = shadow.match(/^([^#]+) (#......)/);
   if (groups === null) {
     // There was no '#', so we assume we're not on IE 9 and everything's fine
     return shadow;
@@ -214,7 +243,7 @@ exports.dropShadow = function dropShadow(element) {
 };
 
 exports.textIsUnderlined = function textIsUnderlined(element) {
-  var style = element.getRawStyle("text-decoration");
+  const style = element.getRawStyle("text-decoration");
   return style.indexOf("none") !== 0;
 };
 
@@ -257,8 +286,8 @@ exports.assertActivateDepresses = function assertActivateDepresses(
 };
 
 function applyClass(element, className, fn) {
-  var domElement = element.toDomElement();
-  var oldClassName = domElement.className;
+  const domElement = element.toDomElement();
+  const oldClassName = domElement.className;
   try {
     domElement.className += " " + className;
     forceReflow(domElement);
@@ -271,18 +300,18 @@ function applyClass(element, className, fn) {
 }
 
 function forceReflow(domElement) {
-  domElement.offsetHeight;
+  return domElement.offsetHeight;
 }
 
 function getCompoundStyle(element, subStyle1, subStyle2, subStyle3, subStyle4) {
   // We can't look at compound properties directly because they return "" on
   // Firefox and IE 9
-  var one = element.getRawStyle(subStyle1);
-  var two = element.getRawStyle(subStyle2);
-  var three = element.getRawStyle(subStyle3);
-  var four = element.getRawStyle(subStyle4);
+  const one = element.getRawStyle(subStyle1);
+  const two = element.getRawStyle(subStyle2);
+  const three = element.getRawStyle(subStyle3);
+  const four = element.getRawStyle(subStyle4);
 
-  var result;
+  let result;
   if (one === two && one === three && one === four) {
     result = one;
   } else {
@@ -293,7 +322,7 @@ function getCompoundStyle(element, subStyle1, subStyle2, subStyle3, subStyle4) {
 
 // Based on MDN code at https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
 function trim(str) {
-  var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+  const rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
   return str.replace(rtrim, "");
 }
 
@@ -302,13 +331,13 @@ function normalizeColorString(color) {
   if (color === "transparent") return "rgba(0, 0, 0, 0)";
 
   // look for presence of #rrggbb string
-  var colorGroups = color.match(/^#(..)(..)(..)/);
+  const colorGroups = color.match(/^#(..)(..)(..)/);
   // if doesn't match, assume we have rgb() string
   if (colorGroups === null) return color;
 
-  var r = parseInt(colorGroups[1], 16);
-  var g = parseInt(colorGroups[2], 16);
-  var b = parseInt(colorGroups[3], 16);
+  const r = parseInt(colorGroups[1], 16);
+  const g = parseInt(colorGroups[2], 16);
+  const b = parseInt(colorGroups[3], 16);
   return "rgb(" + r + ", " + g + ", " + b + ")";
 }
 

@@ -6,7 +6,7 @@
   "scripts": {
     "heroku-prebuild": "./tasks.sh build:all",
     "pretty": "prettier --write \"src/**/*.js\"",
-    "precommit": "lint-staged && ./tasks.sh test:all"
+    "precommit": "lint-staged && ./tasks.sh test:all loose=true"
   },
   "lint-staged": {
     "*.{js,css}": [
@@ -33,8 +33,8 @@
     "simplebuild-karma": "1.0.0"
   },
   "dependencies": {
+    "@chooie/js_to_html": "^1.0.6",
     "express": "4.16.3",
-    "procfile": "0.1.1",
-    "pug": "2.0.3"
+    "procfile": "0.1.1"
   }
 }
