@@ -17,7 +17,6 @@ exports.IOS_BROWSER_WIDTH = 980;
 exports.IPAD_LANDSCAPE_HEIGHT_WITH_BROWSER_TABS = 641;
 exports.smallestDeviceWidth = 320;
 exports.mediumDeviceWidth = 640;
-exports.maximumPageWidth = 800;
 
 exports.createFrame = function createFrame(options, callback) {
   return quixote.createFrame(options, callback);
@@ -209,7 +208,9 @@ exports.containerIsHorizontallyCentered = function containerIsHorizontallyCenter
 ) {
   const left = element.getRawStyle("left");
   const right = element.getRawStyle("right");
-  return left === "auto" && right === "auto";
+  return (
+    (left === "auto" && right === "auto") || (left === "0px" && right === "0px")
+  );
 };
 
 exports.lineHeight = function lineHeight(element) {

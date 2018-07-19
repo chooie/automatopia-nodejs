@@ -1,8 +1,9 @@
 const head = require("./partials/head.js");
+const footer = require("./partials/footer.js");
+const util = require("./util.js");
 
 exports.page = function(options) {
-  return [
-    "html",
+  return util.makeHtmlPage([
     [
       "head",
       "<!-- smoke test marker: App 404 page -->",
@@ -23,8 +24,9 @@ exports.page = function(options) {
             { id: "contact-link", class: "contact-link", href: "/" },
             "Go Home"
           ]
-        ]
+        ],
+        footer.make()
       ]
     ]
-  ];
+  ]);
 };

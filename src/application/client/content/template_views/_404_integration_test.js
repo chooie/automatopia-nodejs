@@ -9,6 +9,7 @@ describe("CSS: 404 page", function() {
   let pageContainer;
   let header;
   let contactLinkContainer;
+  let footer;
 
   before(function(done) {
     /*eslint no-invalid-this:off */
@@ -33,6 +34,7 @@ describe("CSS: 404 page", function() {
     pageContainer = frame.get("#page-container");
     header = frame.get("#header");
     contactLinkContainer = frame.get("#contact-link-container");
+    footer = frame.get("#footer");
   });
 
   describe("Page", function() {
@@ -112,6 +114,47 @@ describe("CSS: 404 page", function() {
     it("is even bigger on wider devices", function() {
       frame.resize(cssHelper.mediumDeviceWidth, 500);
       assert.equal(cssHelper.fontSizeByDecimalPlaces(contactLink, 1), "25.6px");
+    });
+  });
+
+  describe("Footer", function() {
+    it("is small and justified left", function() {
+      assert.equal(cssHelper.fontSize(footer), "12px");
+      assert.equal(footer.getRawStyle("text-align"), "left");
+    });
+
+    it("has a color scheme", function() {
+      assert.equal(cssHelper.textColor(footer), cssHelper.headerTextColor);
+    });
+
+    it("is nicely padded", function() {
+      assert.equal(cssHelper.padding(footer), "10px");
+    });
+
+    it("has a top border", function() {
+      assert.equal(footer.getRawStyle("border-top-width"), "1px");
+      assert.equal(footer.getRawStyle("border-top-style"), "solid");
+      assert.equal(
+        footer.getRawStyle("border-top-color"),
+        "rgb(253, 253, 253)"
+      );
+      assert.equal(footer.getRawStyle("border-right-style"), "none");
+      assert.equal(footer.getRawStyle("border-bottom-style"), "none");
+      assert.equal(footer.getRawStyle("border-left-style"), "none");
+    });
+
+    it("is at the bottom of the page and takes up full width", function() {
+      footer.assert({
+        bottom: pageContainer.bottom,
+        width: pageContainer.width
+      });
+    });
+    it("has a height and vertically centers its children", function() {
+      footer.assert({
+        height: 60
+      });
+      assert.equal(footer.getRawStyle("display"), "flex");
+      assert.equal(footer.getRawStyle("align-items"), "center");
     });
   });
 });

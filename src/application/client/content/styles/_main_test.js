@@ -167,6 +167,47 @@ describe("CSS: Layout", function() {
       assert.equal(cssHelper.fontSizeByDecimalPlaces(contactLink, 1), "25.6px");
     });
   });
+
+  describe("footer", function() {
+    let footer;
+
+    beforeEach(function() {
+      footer = frame.add("<h1 class='footer'>hello</h1>", "page footer");
+    });
+
+    it("is small and justified left", function() {
+      assert.equal(cssHelper.fontSize(footer), "12px");
+      assert.equal(footer.getRawStyle("text-align"), "left");
+    });
+
+    it("has a color scheme", function() {
+      assert.equal(cssHelper.textColor(footer), cssHelper.headerTextColor);
+    });
+
+    it("is nicely padded", function() {
+      assert.equal(cssHelper.padding(footer), "10px");
+    });
+
+    it("has a top border", function() {
+      assert.equal(footer.getRawStyle("border-top-width"), "1px");
+      assert.equal(footer.getRawStyle("border-top-style"), "solid");
+      assert.equal(
+        footer.getRawStyle("border-top-color"),
+        "rgb(253, 253, 253)"
+      );
+      assert.equal(footer.getRawStyle("border-right-style"), "none");
+      assert.equal(footer.getRawStyle("border-bottom-style"), "none");
+      assert.equal(footer.getRawStyle("border-left-style"), "none");
+    });
+
+    it("has a height and vertically centers its children", function() {
+      footer.assert({
+        height: 60
+      });
+      assert.equal(footer.getRawStyle("display"), "flex");
+      assert.equal(footer.getRawStyle("align-items"), "center");
+    });
+  });
 });
 
 function assertDoesNotCollapseItsMargins(element) {

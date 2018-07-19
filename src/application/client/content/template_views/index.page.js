@@ -1,8 +1,9 @@
 const head = require("./partials/head.js");
+const footer = require("./partials/footer.js");
+const util = require("./util.js");
 
 exports.page = function(options) {
-  return [
-    "html",
+  return util.makeHtmlPage([
     [
       "head",
       "<!-- smoke test marker: App home page -->",
@@ -14,7 +15,8 @@ exports.page = function(options) {
       [
         "div",
         { id: "page-container", class: "page-container page-container--light" },
-        ["h1", { id: "header", class: "header" }, "Automatopia NodeJS"]
+        ["h1", { id: "header", class: "header" }, "Automatopia NodeJS"],
+        footer.make()
       ],
       ["script", { src: "bundle.js" }],
       [
@@ -23,5 +25,5 @@ exports.page = function(options) {
         "console.log(client.isTrue());"
       ]
     ]
-  ];
+  ]);
 };
