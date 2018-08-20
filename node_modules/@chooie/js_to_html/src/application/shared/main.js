@@ -125,9 +125,17 @@ function convertElementsToHtml(
 ) {
   return remainingElements.reduce(function(accumulatedString, element) {
     if (typeof element === "string") {
-      return (
-        accumulatedString + fillWhiteSpace(indentLevel + 2) + element + "\n"
-      );
+      const linesLessBlanks = element.split("\n").filter(elem => elem !== "");
+      const indentedLines = linesLessBlanks.map(function(element) {
+        return fillWhiteSpace(indentLevel + 2) + element;
+      });
+      const stringElement = indentedLines.reduce(function(
+        accumulatedStringElement,
+        string
+      ) {
+        return accumulatedStringElement + "\n" + string;
+      });
+      return accumulatedString + stringElement + "\n";
     }
     return (
       accumulatedString +

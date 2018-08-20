@@ -286,6 +286,43 @@ describe("SHARED: Main", function() {
       |`;
     assert.equal(convertedStructure, expectedHtml);
   });
+
+  it("preserves indentation for multiline strings", function() {
+    const structureToConvert = [
+      "html",
+      ["head"],
+      [
+        "body",
+        [
+          "div",
+          util.stripMargin`
+       |This
+       |is
+       |a
+       |multiline
+       |string
+       |`
+        ]
+      ]
+    ];
+    const convertedStructure = main.convert(structureToConvert);
+    const expectedHtml = util.stripMargin`
+      |<!DOCTYPE html>
+      |<html>
+      |  <head></head>
+      |  <body>
+      |    <div>
+      |      This
+      |      is
+      |      a
+      |      multiline
+      |      string
+      |    </div>
+      |  </body>
+      |</html>
+      |`;
+    assert.equal(convertedStructure, expectedHtml);
+  });
 });
 
 function makeTitle(title) {
