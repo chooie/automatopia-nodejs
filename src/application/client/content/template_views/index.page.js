@@ -1,29 +1,22 @@
-const head = require("./partials/head.js");
-const footer = require("./partials/footer.js");
+const preformatted = require("_preformatted");
 const util = require("./util.js");
 
 exports.page = function(options) {
-  return util.makeHtmlPage([
-    [
-      "head",
+  return util.makePageWithHeadAndBody({
+    headElements: [
       "<!-- smoke test marker: App home page -->",
-      ["title", "Home - Automatopia NodeJS"],
-      ...head.make()
+      ["title", "Home - Automatopia NodeJS"]
     ],
-    [
-      "body",
-      [
-        "div",
-        { id: "page-container", class: "page-container page-container--light" },
-        ["h1", { id: "header", class: "header" }, "Automatopia NodeJS"],
-        footer.make()
-      ],
+    bodyElements: [
+      ["h1", { id: "header", class: "header" }, "Automatopia NodeJS"],
       ["script", { src: "bundle.js" }],
       [
         "script",
-        'const client = require("./main.js");',
-        "console.log(client.isTrue());"
+        preformatted`
+          const client = require("./main.js");
+          console.log(client.isTrue());
+        `
       ]
     ]
-  ]);
+  });
 };

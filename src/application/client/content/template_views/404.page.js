@@ -1,32 +1,22 @@
-const head = require("./partials/head.js");
-const footer = require("./partials/footer.js");
 const util = require("./util.js");
 
 exports.page = function(options) {
-  return util.makeHtmlPage([
-    [
-      "head",
+  return util.makePageWithHeadAndBody({
+    headElements: [
       "<!-- smoke test marker: App 404 page -->",
-      ["title", "Page Not Found - Automatopia NodeJS"],
-      ...head.make()
+      ["title", "Page Not Found - Automatopia NodeJS"]
     ],
-    [
-      "body",
+    bodyElements: [
+      ["h1", { id: "header", class: "header" }, "Page Not Found"],
       [
         "div",
-        { id: "page-container", class: "page-container page-container--light" },
-        ["h1", { id: "header", class: "header" }, "Page Not Found"],
+        { id: "contact-link-container", class: "container--contact-link" },
         [
-          "div",
-          { id: "contact-link-container", class: "container--contact-link" },
-          [
-            "a",
-            { id: "contact-link", class: "contact-link", href: "/" },
-            "Go Home"
-          ]
-        ],
-        footer.make()
+          "a",
+          { id: "contact-link", class: "contact-link", href: "/" },
+          "Go Home"
+        ]
       ]
     ]
-  ]);
+  });
 };
