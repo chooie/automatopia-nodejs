@@ -1,3 +1,5 @@
+const mainStyles = require("../../styles/main.js");
+
 exports.make = function make() {
   return [
     [
@@ -12,10 +14,7 @@ exports.make = function make() {
         href: "../styles/vendor/normalize-3.0.2.css"
       }
     ],
-    [
-      "link",
-      { rel: "stylesheet", type: "text/css", href: "../styles/main.css" }
-    ],
+    ["style", mainStyles],
     [
       "link",
       { rel: "shortcut icon", type: "image/png", href: "../nodejs-512.png" }
