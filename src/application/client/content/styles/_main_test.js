@@ -2,8 +2,7 @@ const assert = require("_assert");
 
 const cssHelper = require("../_css_test_helper.js");
 const mainStyles = require("./main.js");
-
-const contentDir = "/base/src/application/client/content";
+const normalize = require("./normalize.js");
 
 let frame;
 let body;
@@ -13,8 +12,7 @@ describe("CSS: Layout", function() {
     frame = cssHelper.createFrame(
       {
         width: cssHelper.smallestDeviceWidth,
-        stylesheet: [`${contentDir}/styles/vendor/normalize-3.0.2.css`],
-        css: mainStyles
+        css: normalize + mainStyles
       },
       done
     );

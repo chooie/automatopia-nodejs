@@ -1,4 +1,5 @@
 const mainStyles = require("../../styles/main.js");
+const normalizeStyles = require("../../styles/normalize.js");
 
 exports.make = function make() {
   return [
@@ -6,14 +7,7 @@ exports.make = function make() {
       "meta",
       { name: "viewport", content: "width=device-width, initial-scale=1" }
     ],
-    [
-      "link",
-      {
-        rel: "stylesheet",
-        type: "text/css",
-        href: "../styles/vendor/normalize-3.0.2.css"
-      }
-    ],
+    ["style", normalizeStyles],
     ["style", mainStyles],
     [
       "link",
